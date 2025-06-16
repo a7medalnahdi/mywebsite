@@ -3,7 +3,7 @@
     {
       "id": "1",
       "title": "هوية شركة تقنية",
-      "image": "",
+      "image": "https://mywebsite-orpin-one.vercel.app/admin.html",
       "category": "branding",
       "modal_content": [
         {
@@ -16,7 +16,7 @@
         },
         {
           "type": "image",
-          "content": ""
+          "content": "https://mywebsite-orpin-one.vercel.app/admin.html"
         },
         {
           "type": "paragraph",
@@ -27,7 +27,7 @@
   ],
   "testimonials": [
     {
-      "image": "",
+      "image": "https://mywebsite-orpin-one.vercel.app/admin.html",
       "text": "كان العمل مع أحمد تجربة رائعة. حول أفكارنا المجردة إلى هوية بصرية فاقت توقعاتنا. الاحترافية والجودة تتحدث عن نفسها.",
       "author": "خالد الأحمد",
       "position": "الرئيس التنفيذي"
@@ -37,6 +37,14 @@
     {
       "name": "Google",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png"
+    },
+    {
+      "name": "شريك جديد",
+      "logo": "https://mywebsite-orpin-one.vercel.app/admin.html"
+    },
+    {
+      "name": "شريك جديد",
+      "logo": "https://mywebsite-orpin-one.vercel.app/admin.html"
     }
   ],
   "socialLinks": [
