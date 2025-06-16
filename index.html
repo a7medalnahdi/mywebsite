@@ -180,7 +180,9 @@
     document.addEventListener('DOMContentLoaded', async () => {
         const preloader = document.querySelector('.preloader');
         try {
-            const response = await fetch('data.json?v=' + Date.now());
+            // -- هذا هو السطر الذي تم تعديله --
+            const response = await fetch('data.json', { cache: 'no-store' });
+            
             siteData = await response.json();
             renderAll();
             initializeScripts();
@@ -241,13 +243,11 @@
     }
 
     function initializeScripts() {
-        // Scroll Effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.page-header');
             if(header) header.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // Testimonial Slider
         const track = document.querySelector('.testimonial-track');
         if (track && track.children.length > 0) {
             let currentSlide = 0;
@@ -265,7 +265,6 @@
             setInterval(nextSlide, 5000);
         }
 
-        // Case Study Modal
         const modal = document.getElementById('case-study-modal');
         document.querySelectorAll('.portfolio-card').forEach(card => {
             card.addEventListener('click', () => {
@@ -288,7 +287,6 @@
             });
         });
         
-        // Admin Login
         const adminTrigger = document.querySelector('.admin-trigger');
         if (adminTrigger) {
             adminTrigger.addEventListener('click', () => {
