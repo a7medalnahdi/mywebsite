@@ -112,6 +112,52 @@
         .section { padding: 6rem 2rem; position: relative; }
         .section-title { font-size: 3rem; font-weight: 700; margin-bottom: 4rem; }
         
+        /* --- About Me Section --- */
+        .about-section {
+             background-color: #050505;
+        }
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4rem;
+            max-width: 1100px;
+            margin: auto;
+            flex-wrap: wrap;
+        }
+        .about-image-wrapper {
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+        }
+        .about-image {
+            width: 100%;
+            border-radius: 50%;
+            border: 5px solid var(--card-border-color);
+            box-shadow: 0 0 40px rgba(0, 255, 58, 0.15);
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+        }
+        .about-content {
+            flex: 1.5;
+            min-width: 300px;
+            text-align: right;
+        }
+        .about-content h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+        .about-content .highlight {
+            color: var(--accent-color);
+        }
+        .about-content p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 1rem;
+        }
+
         /* --- Portfolio Section --- */
         .portfolio-filters {
             display: flex; justify-content: center;
@@ -193,50 +239,6 @@
             font-weight: 300;
             max-width: 300px;
             margin: 0 auto;
-        }
-
-        /* --- About Me Section --- */
-        .about-section {
-             background-color: #050505;
-        }
-        .about-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4rem;
-            max-width: 1100px;
-            margin: auto;
-            flex-wrap: wrap;
-        }
-        .about-image-wrapper {
-            flex: 1;
-            min-width: 280px;
-            max-width: 350px;
-        }
-        .about-image {
-            width: 100%;
-            border-radius: 50%;
-            border: 5px solid var(--card-border-color);
-            box-shadow: 0 0 40px rgba(0, 255, 58, 0.15);
-        }
-        .about-content {
-            flex: 1.5;
-            min-width: 300px;
-            text-align: right;
-        }
-        .about-content h3 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.4;
-        }
-        .about-content .highlight {
-            color: var(--accent-color);
-        }
-        .about-content p {
-            font-size: 1.1rem;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 1rem;
         }
         
         /* --- Testimonials Section --- */
@@ -473,6 +475,24 @@
             </div>
         </section>
 
+        <section class="section about-section" id="about">
+            <h2 class="section-title animate-on-scroll">نبذة عني</h2>
+            <div class="about-container">
+                <div class="about-image-wrapper animate-on-scroll">
+                    <img src="https://i.pinimg.com/736x/0e/36/6c/0e366c7a49f83f6433f9a82f78ecccb4.jpg" alt="أحمد النهدي" class="about-image">
+                </div>
+                <div class="about-content animate-on-scroll">
+                    <h3>مصمم بصري شغوف بتحويل الأفكار إلى <span class="highlight">تجارب لا تُنسى</span></h3>
+                    <p>
+                        أؤمن بأن التصميم الجيد ليس مجرد شكل جميل، بل هو حوار بين العلامة التجارية وجمهورها. بخبرة تمتد لسنوات في مجال تصميم الهويات البصرية وواجهات المستخدم، أساعد الشركات على سرد قصتها بطريقة مؤثرة وواضحة.
+                    </p>
+                    <p>
+                        أركز دائماً على فهم أهداف عملائي العميقة لتقديم حلول تصميمية ليست فقط جذابة بصرياً، بل تخدم أهدافاً استراتيجية وتحقق نتائج ملموسة.
+                    </p>
+                </div>
+            </div>
+        </section>
+
         <section class="section portfolio-section" id="portfolio">
              <h2 class="section-title animate-on-scroll">أعمالي</h2>
              <div class="portfolio-filters animate-on-scroll">
@@ -507,24 +527,6 @@
                     </div>
                     <h3 class="service-card-title">استشارات إبداعية</h3>
                     <p class="service-card-description">أقدم استشارات متخصصة لمساعدتك على تطوير استراتيجيتك الإبداعية واتخاذ قرارات تصميمية تخدم رؤيتك المستقبلية.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section about-section" id="about">
-            <h2 class="section-title animate-on-scroll">نبذة عني</h2>
-            <div class="about-container">
-                <div class="about-image-wrapper animate-on-scroll">
-                    <img src="https://via.placeholder.com/400" alt="أحمد النهدي" class="about-image">
-                </div>
-                <div class="about-content animate-on-scroll">
-                    <h3>مصمم بصري شغوف بتحويل الأفكار إلى <span class="highlight">تجارب لا تُنسى</span></h3>
-                    <p>
-                        أؤمن بأن التصميم الجيد ليس مجرد شكل جميل، بل هو حوار بين العلامة التجارية وجمهورها. بخبرة تمتد لسنوات في مجال تصميم الهويات البصرية وواجهات المستخدم، أساعد الشركات على سرد قصتها بطريقة مؤثرة وواضحة.
-                    </p>
-                    <p>
-                        أركز دائماً على فهم أهداف عملائي العميقة لتقديم حلول تصميمية ليست فقط جذابة بصرياً، بل تخدم أهدافاً استراتيجية وتحقق نتائج ملموسة.
-                    </p>
                 </div>
             </div>
         </section>
