@@ -597,16 +597,36 @@
         // --- Case Study Modal ---
         const caseStudyModal = document.getElementById('case-study-modal');
         const openCaseStudyModal = (projectId) => {
-            const data = siteData.portfolio.find(p => p.id === projectId);
-            if (!data || !caseStudyModal) return;
+            // ابحث عن بيانات المشروع في الملف. ملاحظة: تم تعديل هذا الجزء ليتوافق مع هيكلة البيانات الجديدة
+            // حيث أن ملف admin.html لم يعد يضيف "id" للمشاريع الجديدة. سنعتمد على index بدلاً من id للتبسيط.
+            // لكن للحفاظ على التوافق مع الكود الأصلي، سنفترض أن الـ id لا يزال يستخدم.
+            const data = siteData.portfolio.find(p => p.id === projectId || p.title === projectId); // تعديل بسيط للبحث بالعنوان كحل بديل
+            
+            if (!data || !data.details || !caseStudyModal) {
+                 console.error('Project data or details not found for ID:', projectId);
+                 return;
+            }
+
+            // بناء محتوى النافذة المنبثقة بشكل ديناميكي من مصفوفة المحتوى
+            let modalBodyHtml = '';
+            if (data.details.content && Array.isArray(data.details.content)) {
+                data.details.content.forEach(block => {
+                    if (block.type === 'image' && block.value) {
+                        modalBodyHtml += `<img src="${block.value}" alt="${data.details.title}" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">`;
+                    } else if (block.type === 'text' && block.value) {
+                        modalBodyHtml += `<div>${block.value}</div>`; // يتم عرض المحتوى النصي كما هو (يدعم HTML)
+                    }
+                });
+            }
 
             caseStudyModal.innerHTML = `
                 <div class="modal-content">
                     <button class="modal-close" id="case-study-close-button">&times;</button>
-                    <img src="${data.modal_image}" alt="${data.modal_title}" style="width: 100%; border-radius: 8px; margin-bottom: 1.5rem;">
-                    <h3 class="modal-title" style="font-size: 2rem;">${data.modal_title}</h3>
-                    <p style="color: var(--accent-color); margin-bottom: 1.5rem; font-weight: 500;">${data.modal_category}</p>
-                    <div>${data.modal_content}</div>
+                    <h3 class="modal-title" style="font-size: 2rem;">${data.details.title}</h3>
+                    <p style="color: var(--accent-color); margin-bottom: 1.5rem; font-weight: 500;">${data.details.category}</p>
+                    <div class="case-study-body">
+                        ${modalBodyHtml}
+                    </div>
                 </div>
             `;
             caseStudyModal.classList.add('visible');
@@ -614,7 +634,7 @@
         };
         const closeCaseStudyModal = () => caseStudyModal.classList.remove('visible');
 
-        document.querySelectorAll('.portfolio-card').forEach(card => card.addEventListener('click', () => openCaseStudyModal(card.dataset.projectId)));
+        document.querySelectorAll('.portfolio-card').forEach(card => card.addEventListener('click', () => openCaseStudyModal(card.querySelector('.portfolio-card-title').textContent)));
         caseStudyModal.addEventListener('click', e => { if (e.target === caseStudyModal) closeCaseStudyModal(); });
 
         // --- Contact Modal ---
