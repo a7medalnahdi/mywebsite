@@ -23,157 +23,87 @@
             line-height: 1.8;
         }
         .admin-header {
-            background-color: var(--surface-color);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            background-color: var(--surface-color); padding: 1rem 2rem; display: flex;
+            justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 1000;
         }
-        .admin-header h1 {
-            font-size: 1.5rem;
-            color: var(--text-color);
-        }
+        .admin-header h1 { font-size: 1.5rem; color: var(--text-color); }
         .header-actions button, .header-actions a {
-            padding: 0.7rem 1.2rem;
-            font-weight: 700;
-            border-radius: 8px;
-            cursor: pointer;
-            border: none;
-            font-family: inherit;
-            transition: all 0.2s;
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin-left: 1rem;
+            padding: 0.7rem 1.2rem; font-weight: 700; border-radius: 8px; cursor: pointer;
+            border: none; font-family: inherit; transition: all 0.2s; text-decoration: none;
+            font-size: 0.9rem; margin-left: 1rem;
         }
-        .btn-back {
-            background-color: #444;
-            color: #fff;
-        }
-        .btn-back:hover {
-            background-color: #555;
-        }
-        .btn-save {
-            background-color: var(--primary-color);
-            color: #000;
-        }
-        .btn-save:hover {
-            filter: brightness(1.2);
-        }
+        .btn-back { background-color: #444; color: #fff; }
+        .btn-back:hover { background-color: #555; }
+        .btn-save { background-color: var(--primary-color); color: #000; }
+        .btn-save:hover { filter: brightness(1.2); }
 
         .container { max-width: 1300px; margin: auto; padding: 2rem; }
         
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 2rem;
-        }
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 2rem; }
         .tab-btn {
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: #888;
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 500;
-            border-bottom: 3px solid transparent;
-            transition: all 0.2s;
+            padding: 1rem 1.5rem; cursor: pointer; background: none; border: none; color: #888;
+            font-family: inherit; font-size: 1rem; font-weight: 500;
+            border-bottom: 3px solid transparent; transition: all 0.2s;
         }
-        .tab-btn:hover {
-            color: #fff;
-        }
-        .tab-btn.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
-        }
+        .tab-btn:hover { color: #fff; }
+        .tab-btn.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
 
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
         .item-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 1.5rem;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); gap: 1.5rem;
         }
 
         .item-card { 
-            background-color: var(--surface-color); 
-            border: 1px solid var(--border-color); 
-            border-radius: 12px; 
-            overflow: hidden;
+            background-color: var(--surface-color); border: 1px solid var(--border-color); 
+            border-radius: 12px; overflow: hidden;
         }
         .item-card-header {
-            padding: 1rem 1.5rem;
-            background-color: rgba(0,0,0,0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 1rem 1.5rem; background-color: rgba(0,0,0,0.2); display: flex;
+            justify-content: space-between; align-items: center;
         }
-        .item-card-header h3 {
-             font-size: 1.1rem;
-        }
-        .item-card-body {
-            padding: 1.5rem;
-        }
+        .item-card-header h3 { font-size: 1.1rem; }
+        .item-card-body { padding: 1.5rem; }
         
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #aaa; font-size: 0.9rem; }
         .form-group input, .form-group textarea {
-            width: 100%; padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; border-radius: 8px; color: var(--text-color); font-family: inherit;
+            width: 100%; padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; 
+            border-radius: 8px; color: var(--text-color); font-family: inherit;
         }
         .form-group textarea { resize: vertical; min-height: 120px; }
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-color); }
 
-        .image-group .image-controls {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
+        .image-group .image-controls { display: flex; gap: 1rem; align-items: center; }
         .image-group input[type="file"] { display: none; }
         .image-group .btn-upload {
-            padding: 0.8rem 1rem;
-            background-color: #555;
-            color: #fff;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            flex-shrink: 0;
+            padding: 0.8rem 1rem; background-color: #555; color: #fff;
+            border-radius: 8px; cursor: pointer; text-align: center; flex-shrink: 0;
         }
         .image-group .image-preview {
-            display: block;
-            max-width: 100%;
-            margin-top: 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
+            display: block; max-width: 100%; margin-top: 1rem; border-radius: 8px; border: 1px solid var(--border-color);
         }
         
         .btn-delete { background-color: #ff4d4d; color: #fff; padding: 0.5rem 1rem; font-size: 0.9rem; border-radius: 8px; border: none; cursor: pointer;}
         .btn-add {
-            display: block;
-            width: 100%;
-            padding: 1.5rem;
-            font-size: 1.2rem;
-            font-weight: 700;
-            background-color: transparent;
-            color: var(--primary-color);
-            border: 2px dashed var(--border-color);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 1.5rem;
+            display: block; width: 100%; padding: 1.5rem; font-size: 1.2rem; font-weight: 700;
+            background-color: transparent; color: var(--primary-color); border: 2px dashed var(--border-color);
+            border-radius: 12px; cursor: pointer; transition: all 0.2s; margin-top: 1.5rem;
         }
-        .btn-add:hover {
-            background-color: var(--surface-color);
-            border-color: var(--primary-color);
-        }
-        .hidden { display: none; }
+        .btn-add:hover { background-color: var(--surface-color); border-color: var(--primary-color); }
+        
+        /* New Styles for Content Builder */
+        hr.section-divider { border: 0; border-top: 1px solid #444; margin: 2rem 0; }
+        .card-section-title { margin-bottom: 1rem; color: var(--primary-color); font-weight: 700; font-size: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #444; }
+        .content-builder { border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; margin-top: 1rem; }
+        .content-block { border: 1px solid #444; background-color: #222; padding: 1rem; padding-top: 2.5rem; border-radius: 8px; margin-bottom: 1rem; position: relative; }
+        .content-builder-actions { display: flex; gap: 1rem; margin-top: 1rem; }
+        .btn-add-content { background-color: #3a3a3a; color: #fff; border: 1px solid #555; padding: 0.8rem 1.2rem; border-radius: 8px; cursor: pointer; font-family: inherit; font-weight: 500;}
+        .btn-add-content:hover { background-color: #4a4a4a; }
+        .btn-delete-block { position: absolute; top: 0.5rem; left: 0.5rem; background-color: #633; color: #ffdddd; border: 1px solid #844; border-radius: 5px; cursor: pointer; padding: 0.2rem 0.5rem; font-size: 0.8rem;}
+        .btn-delete-block:hover { background-color: #ff4d4d; color: #fff; border-color: #ff4d4d;}
     </style>
 </head>
 <body>
@@ -218,6 +148,23 @@
         try {
             const response = await fetch('data.json?v=' + Date.now()); // Prevent caching
             siteData = await response.json();
+            // --- Data Structure Migration (forwards compatibility) ---
+            // If a project has old `modal_content` and not new `details`, convert it.
+            if (siteData.portfolio && siteData.portfolio.length > 0) {
+                siteData.portfolio.forEach(p => {
+                    if (p.modal_content && !p.details) {
+                        p.details = {
+                            title: p.modal_title || p.title,
+                            category: p.modal_category || p.card_category || '',
+                            content: [{ type: 'text', value: p.modal_content }]
+                        };
+                        // Delete old keys
+                        delete p.modal_content;
+                        delete p.modal_title;
+                        delete p.modal_category;
+                    }
+                });
+            }
             renderAll();
             setupEventListeners();
         } catch (error) {
@@ -231,21 +178,87 @@
         renderTestimonials();
         renderPartners();
     }
+    
+    // --- NEW: CONTENT BLOCK RENDERER ---
+    function renderContentBlock(block, projectIndex, blockIndex) {
+        const blockId = `p${projectIndex}_b${blockIndex}`;
+        let content = '';
+        if (block.type === 'text') {
+            content = `
+                <div class="form-group">
+                    <label>كتلة نصية (HTML مسموح)</label>
+                    <textarea class="content-block-value" data-type="text">${block.value}</textarea>
+                </div>
+            `;
+        } else if (block.type === 'image') {
+            content = `
+                <div class="form-group image-group">
+                    <label>صورة</label>
+                    <div class="image-controls">
+                        <input type="text" class="content-block-value image-url" data-type="image" value="${block.value}">
+                        <input type="file" class="image-upload" accept="image/*" id="cb_img_${blockId}">
+                        <label for="cb_img_${blockId}" class="btn-upload">اختر ملف</label>
+                    </div>
+                    <img src="${block.value}" class="image-preview" alt="Preview">
+                </div>
+            `;
+        }
 
-    // --- RENDER FUNCTIONS ---
+        return `
+            <div class="content-block" data-block-index="${blockIndex}">
+                <button class="btn-delete-block" onclick="deleteContentBlock(event, ${projectIndex}, ${blockIndex})">حذف الكتلة</button>
+                ${content}
+            </div>
+        `;
+    }
+
+    // --- RENDER FUNCTIONS (Portfolio is updated) ---
     function renderPortfolio() {
         const list = document.getElementById('portfolio-list');
         list.innerHTML = siteData.portfolio.map((item, index) => `
             <div class="item-card" data-index="${index}" data-section="portfolio">
                 <div class="item-card-header">
-                    <h3>مشروع ${index + 1}</h3>
+                    <h3>${item.title || `مشروع ${index + 1}`}</h3>
                     <button class="btn-delete" onclick="deleteItem('portfolio', ${index})">حذف</button>
                 </div>
                 <div class="item-card-body">
-                    <div class="form-group"><label>عنوان البطاقة</label><input type="text" class="data-field" data-key="title" value="${item.title}"></div>
-                    <div class="form-group image-group"><label>صورة البطاقة</label><div class="image-controls"><input type="text" class="data-field image-url" data-key="image" value="${item.image}"><input type="file" class="image-upload" accept="image/*" id="p_img_${index}"><label for="p_img_${index}" class="btn-upload">اختر ملف</label></div><img src="${item.image}" class="image-preview" alt="Preview"></div>
-                    <hr style="margin: 2rem 0; border-color: #333;">
-                    <div class="form-group"><label>محتوى النافذة المنبثقة (HTML مسموح)</label><textarea class="data-field" data-key="modal_content">${item.modal_content}</textarea></div>
+                    <h4 class="card-section-title">بيانات البطاقة (العرض المصغر)</h4>
+                    <div class="form-group">
+                        <label>عنوان البطاقة</label>
+                        <input type="text" class="data-field-main" data-key="title" value="${item.title || ''}">
+                    </div>
+                    <div class="form-group image-group">
+                        <label>صورة البطاقة الرئيسية</label>
+                        <div class="image-controls">
+                            <input type="text" class="data-field-main image-url" data-key="image" value="${item.image || ''}">
+                            <input type="file" class="image-upload" accept="image/*" id="p_img_${index}">
+                            <label for="p_img_${index}" class="btn-upload">اختر ملف</label>
+                        </div>
+                        <img src="${item.image || ''}" class="image-preview" alt="Preview">
+                    </div>
+
+                    <hr class="section-divider">
+
+                    <h4 class="card-section-title">محتويات النافذة المنبثقة (التفاصيل)</h4>
+                    <div class="form-group">
+                        <label>عنوان النافذة</label>
+                        <input type="text" class="data-field-details" data-key="title" value="${item.details ? item.details.title : ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>صنف المشروع في النافذة</label>
+                        <input type="text" class="data-field-details" data-key="category" value="${item.details ? item.details.category : ''}">
+                    </div>
+
+                    <div class="content-builder" data-project-index="${index}">
+                        <label style="font-weight: 500; color: #aaa;">محتوى المشروع (نصوص وصور)</label>
+                        <div class="content-blocks-list">
+                            ${item.details ? item.details.content.map((block, blockIndex) => renderContentBlock(block, index, blockIndex)).join('') : ''}
+                        </div>
+                        <div class="content-builder-actions">
+                            <button class="btn-add-content" onclick="addContentBlock(event, ${index}, 'text')">+ إضافة نص</button>
+                            <button class="btn-add-content" onclick="addContentBlock(event, ${index}, 'image')">+ إضافة صورة</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         `).join('');
@@ -282,49 +295,65 @@
     // --- EVENT LISTENERS ---
     function setupEventListeners() {
         document.body.addEventListener('change', function(event) {
-            // Handle image uploads
             if (event.target.classList.contains('image-upload')) {
                 const file = event.target.files[0];
                 if (!file) return;
-                
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    const card = event.target.closest('.item-card');
-                    const preview = card.querySelector('.image-preview');
-                    const urlInput = card.querySelector('.image-url');
-                    
-                    preview.src = e.target.result;
-                    urlInput.value = ''; // Clear URL input when a file is uploaded
+                    const group = event.target.closest('.image-group');
+                    group.querySelector('.image-preview').src = e.target.result;
+                    group.querySelector('.image-url').value = 'تم رفع ملف'; // Indicate file upload
                 };
                 reader.readAsDataURL(file);
             }
         });
         document.body.addEventListener('input', function(event){
-             // Handle image url changes
             if (event.target.classList.contains('image-url')) {
-                 const card = event.target.closest('.item-card');
-                 const preview = card.querySelector('.image-preview');
-                 preview.src = event.target.value;
+                 const group = event.target.closest('.image-group');
+                 group.querySelector('.image-preview').src = event.target.value;
             }
         });
     }
     
     // --- ACTIONS (ADD, DELETE, SAVE) ---
     function addPortfolioItem() {
-        siteData.portfolio.push({
-            id: Date.now().toString(), category: "branding", image: "", title: "مشروع جديد", card_category: "علامة تجارية", modal_title: "مشروع جديد", modal_category: "علامة تجارية", modal_image: "", modal_content: ""
+        siteData.portfolio.unshift({
+            title: "مشروع جديد",
+            image: "",
+            details: {
+                title: "عنوان تفصيلي للمشروع",
+                category: "صنف المشروع",
+                content: [
+                    { type: "text", value: "وصف المشروع هنا..." }
+                ]
+            }
         });
         renderPortfolio();
     }
     function addTestimonialItem() {
-        siteData.testimonials.push({ image: "", text: "نص جديد", author: "اسم جديد", position: "منصب جديد" });
+        siteData.testimonials.unshift({ image: "", text: "نص جديد", author: "اسم جديد", position: "منصب جديد" });
         renderTestimonials();
     }
     function addPartnerItem() {
-        siteData.partners.push({ name: "شريك جديد", logo: "" });
+        siteData.partners.unshift({ name: "شريك جديد", logo: "" });
         renderPartners();
     }
     
+    // --- NEW: CONTENT BLOCK ACTIONS ---
+    function addContentBlock(event, projectIndex, type) {
+        event.preventDefault();
+        const defaultValue = type === 'text' ? 'اكتب النص هنا...' : '';
+        siteData.portfolio[projectIndex].details.content.push({ type: type, value: defaultValue });
+        renderPortfolio();
+    }
+    function deleteContentBlock(event, projectIndex, blockIndex) {
+        event.preventDefault();
+        if (confirm('هل أنت متأكد من حذف هذه الكتلة؟')) {
+            siteData.portfolio[projectIndex].details.content.splice(blockIndex, 1);
+            renderPortfolio();
+        }
+    }
+
     function deleteItem(section, index) {
         if(confirm('هل أنت متأكد من حذف هذا العنصر؟')) {
             siteData[section].splice(index, 1);
@@ -333,28 +362,58 @@
     }
 
     function saveChanges() {
-        if(!confirm('هل تريد حفظ التغييرات وتنزيل الملف الجديد؟')) return;
+        if(!confirm('هل تريد حفظ التغييرات وتنزيل الملف الجديد؟\n\n**تحذير:** تم تحديث بنية ملف المشاريع لدعم الميزات الجديدة. ستحتاج إلى تحديث كود موقعك الرئيسي ليتمكن من قراءة ملف data.json الجديد.')) return;
 
-        // Collect data from the DOM
-        document.querySelectorAll('.item-card').forEach(card => {
-            const section = card.dataset.section;
-            const index = card.dataset.index;
-            let item = siteData[section][index];
-
-            card.querySelectorAll('.data-field').forEach(field => {
-                const key = field.dataset.key;
-                if(key === 'image' || key === 'logo'){
-                    // For images, save the preview src, which can be a URL or Base64
-                    item[key] = card.querySelector('.image-preview').src;
-                } else {
-                    item[key] = field.value;
+        // --- UPDATE siteData OBJECT FROM DOM ---
+        
+        // 1. PORTFOLIO (New structure)
+        const newPortfolio = [];
+        document.querySelectorAll('.item-card[data-section="portfolio"]').forEach(card => {
+            const newProject = {
+                title: card.querySelector('.data-field-main[data-key="title"]').value,
+                image: card.querySelector('.item-card-body > .image-group .image-preview').src,
+                details: {
+                    title: card.querySelector('.data-field-details[data-key="title"]').value,
+                    category: card.querySelector('.data-field-details[data-key="category"]').value,
+                    content: []
                 }
+            };
+            card.querySelectorAll('.content-block').forEach(block => {
+                const valueElement = block.querySelector('.content-block-value');
+                const blockType = valueElement.dataset.type;
+                let blockValue;
+                if (blockType === 'image') {
+                    blockValue = block.querySelector('.image-preview').src;
+                } else { // 'text'
+                    blockValue = valueElement.value;
+                }
+                newProject.details.content.push({ type: blockType, value: blockValue });
             });
+            newPortfolio.push(newProject);
+        });
+        siteData.portfolio = newPortfolio;
+
+        // 2. TESTIMONIALS & PARTNERS (Old structure)
+        ['testimonials', 'partners'].forEach(section => {
+            const newList = [];
+            document.querySelectorAll(`.item-card[data-section="${section}"]`).forEach(card => {
+                const newItem = {};
+                card.querySelectorAll('.data-field').forEach(field => {
+                    const key = field.dataset.key;
+                    if(key === 'image' || key === 'logo'){
+                        newItem[key] = card.querySelector('.image-preview').src;
+                    } else {
+                        newItem[key] = field.value;
+                    }
+                });
+                newList.push(newItem);
+            });
+            siteData[section] = newList;
         });
 
-        // Generate and download JSON
+        // --- GENERATE AND DOWNLOAD JSON ---
         const jsonString = JSON.stringify(siteData, null, 2);
-        const blob = new Blob([jsonString], { type: 'application/json' });
+        const blob = new Blob([jsonString], { type: 'application/json;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
