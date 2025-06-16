@@ -60,20 +60,20 @@
             backdrop-filter: blur(10px);
         }
         .logo { font-weight: 700; font-size: 1.5rem; }
-        .nav-links { display: flex; align-items: center; gap: 2rem; }
-        .nav-links a {
+        .main-nav { display: flex; align-items: center; gap: 2rem; }
+        .main-nav a {
             color: var(--text-color); text-decoration: none;
             font-weight: 500; position: relative; transition: color 0.3s;
         }
-        .nav-links a:not(.cta-button-nav)::after {
+        .main-nav a:not(.cta-button-nav)::after {
             content: ''; position: absolute;
             width: 0; height: 2px;
             bottom: -5px; right: 0;
             background-color: var(--accent-color);
             transition: width 0.3s;
         }
-        .nav-links a:not(.cta-button-nav):hover { color: var(--accent-color); }
-        .nav-links a:not(.cta-button-nav):hover::after { width: 100%; }
+        .main-nav a:not(.cta-button-nav):hover { color: var(--accent-color); }
+        .main-nav a:not(.cta-button-nav):hover::after { width: 100%; }
         .cta-button-nav {
              background-color: var(--accent-color); color: #000;
             border: 1px solid var(--accent-color); padding: 0.5rem 1.5rem;
@@ -82,6 +82,7 @@
             transition: all 0.3s;
         }
         .cta-button-nav:hover { background-color: var(--accent-color-dark); transform: translateY(-2px); }
+        .mobile-nav-toggle { display: none; }
 
 
         /* --- Hero Section --- */
@@ -93,7 +94,8 @@
         .hero-bg {
             position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 100%, rgba(0, 255, 58, 0.1), transparent 70%);
+            /* التعديل رقم 3: تنعيم حواف التدرج اللوني */
+            background: radial-gradient(ellipse at 50% 150%, rgba(0, 255, 58, 0.15) 0%, transparent 70%);
             z-index: 0;
         }
         
@@ -127,6 +129,7 @@
         .portfolio-filters {
             display: flex; justify-content: center;
             gap: 1rem; margin-bottom: 3rem;
+            flex-wrap: wrap;
         }
         .filter-btn {
             background: none; border: 1px solid var(--card-border-color);
@@ -139,7 +142,7 @@
         }
 
         .portfolio-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem; max-width: 1200px; margin: auto;
         }
         .portfolio-card {
@@ -155,6 +158,7 @@
             border-radius: 16px;
             background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(0, 255, 58, 0.2), transparent 40%);
             z-index: 1; opacity: 0; transition: opacity 0.3s;
+            pointer-events: none;
         }
         
         .portfolio-card .card-image { overflow: hidden; position: relative; z-index: 0; }
@@ -174,21 +178,12 @@
             gap: 2rem; max-width: 1200px; margin: auto;
         }
         .process-step {
-            text-align: right;
-            background-color: var(--card-bg-color);
-            padding: 2rem;
-            border-radius: 16px;
-            border: 1px solid var(--card-border-color);
+            text-align: right; background-color: var(--card-bg-color);
+            padding: 2rem; border-radius: 16px; border: 1px solid var(--card-border-color);
             transition: all 0.3s;
         }
-        .process-step:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent-color);
-        }
-        .process-step .step-number {
-            font-size: 2rem; font-weight: 700;
-            color: var(--accent-color); margin-bottom: 1rem;
-        }
+        .process-step:hover { transform: translateY(-10px); border-color: var(--accent-color); }
+        .process-step .step-number { font-size: 2rem; font-weight: 700; color: var(--accent-color); margin-bottom: 1rem; }
         .process-step .step-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
         .process-step .step-description { color: rgba(255,255,255,0.7); font-weight: 300; }
         
@@ -197,64 +192,35 @@
         .testimonial-slider { max-width: 700px; margin: auto; position: relative; }
         .testimonial-track-container { overflow: hidden; border-radius: 16px; }
         .testimonial-track { display: flex; transition: transform 0.5s ease-in-out; }
-        .testimonial-card {
-            flex: 0 0 100%;
-            background: var(--card-bg-color);
-            padding: 2.5rem;
-        }
+        .testimonial-card { flex: 0 0 100%; background: var(--card-bg-color); padding: 2.5rem; }
         .testimonial-text { font-size: 1.2rem; font-style: italic; margin-bottom: 1.5rem; color: rgba(255,255,255,0.8); }
         .testimonial-author-wrapper { display: flex; align-items: center; gap: 1rem; justify-content: flex-end; }
         .testimonial-author-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
         .testimonial-author { font-weight: 700; text-align: right; }
         .testimonial-author span { font-weight: 300; color: rgba(255,255,255,0.6); display: block; }
         .slider-nav { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; }
-        .slider-btn {
-            background: var(--card-border-color); border: none;
-            width: 40px; height: 40px; border-radius: 50%;
-            color: white; cursor: pointer; transition: all 0.3s;
-        }
+        .slider-btn { background: var(--card-border-color); border: none; width: 40px; height: 40px; border-radius: 50%; color: white; cursor: pointer; transition: all 0.3s; }
         .slider-btn:hover { background: var(--accent-color); color: #000; }
         
         /* --- Partners Section --- */
-        .partners-container {
-            max-width: 1200px; margin: auto;
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            align-items: center; gap: 3rem;
-        }
-        .partner-logo {
-            max-height: 35px;
-            width: auto; margin: 0 auto;
-            opacity: 0.6; filter: brightness(0) invert(1);
-            transition: all 0.3s;
-        }
+        .partners-container { max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); align-items: center; gap: 3rem; }
+        .partner-logo { max-height: 35px; width: auto; margin: 0 auto; opacity: 0.6; filter: brightness(0) invert(1); transition: all 0.3s; }
         .partner-logo:hover { opacity: 1; transform: scale(1.1); }
         
         /* --- CTA Section --- */
         .cta-section { padding: 0 2rem; }
         .cta-container {
-            max-width: 1000px; margin: auto;
-            background: linear-gradient(135deg, #0a0a0a, #111111);
-            border: 1px solid var(--card-border-color);
-            border-radius: 24px; padding: 4rem 2rem;
+            max-width: 1000px; margin: auto; background: linear-gradient(135deg, #0a0a0a, #111111);
+            border: 1px solid var(--card-border-color); border-radius: 24px; padding: 4rem 2rem;
             position: relative; overflow: hidden;
         }
-        .cta-container::before {
-            content: ''; position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(ellipse at 80% 20%, var(--accent-color-glow), transparent 70%);
-            opacity: 0.5;
-        }
+        .cta-container::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse at 80% 20%, var(--accent-color-glow), transparent 70%); opacity: 0.5; }
         .cta-title { font-size: 2.5rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem; position: relative; z-index: 1; }
-        .cta-subtitle {
-            font-size: 1.2rem; max-width: 600px; color: rgba(255,255,255,0.8);
-            margin-bottom: 2rem; font-weight: 300; position: relative; z-index: 1;
-        }
+        .cta-subtitle { font-size: 1.2rem; max-width: 600px; color: rgba(255,255,255,0.8); margin-bottom: 2rem; font-weight: 300; position: relative; z-index: 1; }
         .cta-button-contact {
-            background: var(--accent-color); color: #000;
-            border: 1px solid transparent; padding: 1rem 3rem;
-            font-size: 1.2rem; font-weight: 700; border-radius: 50px;
-            cursor: pointer; text-decoration: none; transition: all 0.3s;
-            position: relative; z-index: 1;
+            background: var(--accent-color); color: #000; border: 1px solid transparent; padding: 1rem 3rem;
+            font-size: 1.2rem; font-weight: 700; border-radius: 50px; cursor: pointer; text-decoration: none;
+            transition: all 0.3s; position: relative; z-index: 1;
         }
         .cta-button-contact:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--accent-color-glow); }
         
@@ -277,61 +243,62 @@
         }
         .modal-overlay.visible { opacity: 1; pointer-events: all; }
         .modal-content {
-            background: #1a1a1a; padding: 2.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--card-border-color);
-            width: 90%; max-width: 450px; position: relative;
+            background: #1a1a1a; padding: 2.5rem; border-radius: 16px;
+            border: 1px solid var(--card-border-color); width: 90%;
+            max-width: 450px; position: relative;
             transform: scale(0.95); transition: transform 0.3s ease;
         }
-        .modal-overlay.case-study .modal-content { max-width: 800px; text-align: right; }
         .modal-overlay.visible .modal-content { transform: scale(1); }
         .modal-close {
             position: absolute; top: 1rem; right: 1rem; background: none;
             border: none; color: #888; cursor: pointer;
-            font-size: 1.5rem; transition: color 0.2s;
-            z-index: 102;
+            font-size: 1.5rem; transition: color 0.2s; z-index: 102;
         }
         .modal-close:hover { color: var(--text-color); }
         .modal-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
         .modal-subtitle { font-size: 1rem; color: #aaa; margin-bottom: 2.5rem; font-weight: 300; }
+        
+        /* التعديل رقم 2: تحسين نافذة تفاصيل المشروع */
+        .modal-overlay.case-study .modal-content {
+            max-width: 800px; text-align: right;
+            max-height: 85vh; /* تحديد أقصى ارتفاع */
+            display: flex;
+            flex-direction: column;
+        }
+        .case-study-header {
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--card-border-color);
+            flex-shrink: 0;
+        }
+        .case-study-body {
+            overflow-y: auto; /* إضافة شريط تمرير داخلي */
+            padding-top: 1.5rem;
+            -webkit-overflow-scrolling: touch; /* لتحسين التمرير على iOS */
+        }
+        /* ---- */
+
         .modal-input, .modal-textarea {
-            width: 100%; padding: 1rem; margin-bottom: 1rem;
-            background: transparent; border: 1px solid #333;
-            border-radius: 12px;
+            width: 100%; padding: 1rem; margin-bottom: 1rem; background: transparent;
+            border: 1px solid #333; border-radius: 12px;
             color: var(--text-color); font-family: inherit; resize: vertical;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
-        .modal-input:focus, .modal-textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 15px var(--accent-color-glow);
-        }
+        .modal-input:focus, .modal-textarea:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 15px var(--accent-color-glow); }
         .modal-button {
             width: 100%; padding: 1rem; background: var(--accent-color);
             color: #000; border: none; border-radius: 12px;
             cursor: pointer; font-weight: 700; transition: all 0.3s;
         }
-        .modal-button:hover {
-            filter: brightness(1.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--accent-color-glow);
-        }
+        .modal-button:hover { filter: brightness(1.2); transform: translateY(-2px); box-shadow: 0 5px 15px var(--accent-color-glow); }
         #form-success-message { display:none; color: var(--accent-color); text-align: center; margin-top: 1rem; font-weight: 500;}
 
         /* --- Scroll to Top Button --- */
         .scroll-to-top {
-            position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            background-color: var(--accent-color);
-            color: #000;
-            width: 50px; height: 50px;
-            border-radius: 50%; border: none;
+            position: fixed; bottom: 2rem; left: 2rem; background-color: var(--accent-color);
+            color: #000; width: 50px; height: 50px; border-radius: 50%; border: none;
             display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; cursor: pointer;
-            opacity: 0; visibility: hidden;
-            transform: translateY(20px);
-            transition: all 0.3s; z-index: 99;
+            font-size: 1.5rem; cursor: pointer; opacity: 0; visibility: hidden;
+            transform: translateY(20px); transition: all 0.3s; z-index: 99;
         }
         .scroll-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
         
@@ -340,6 +307,65 @@
         .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+        /* --- التعديل رقم 1: استجابة الجوال --- */
+        @media (max-width: 768px) {
+            .page-header { padding: 1rem; }
+            .main-nav {
+                position: fixed;
+                top: 0;
+                left: 0; /* تغيير من right إلى left ليتوافق مع dir=rtl */
+                width: 280px;
+                height: 100%;
+                background-color: #151515;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 6rem 2rem 2rem;
+                gap: 2rem;
+                transform: translateX(100%); /* تغيير من -100% إلى 100% */
+                transition: transform 0.3s ease-in-out;
+                z-index: 99;
+            }
+            .main-nav.visible { transform: translateX(0); }
+            .main-nav a { font-size: 1.2rem; }
+            .mobile-nav-toggle {
+                display: block;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 0.5rem;
+                z-index: 100;
+            }
+            .mobile-nav-toggle .hamburger {
+                display: block;
+                width: 25px;
+                height: 2px;
+                background-color: var(--text-color);
+                position: relative;
+                transition: all 0.3s;
+            }
+            .mobile-nav-toggle .hamburger::before,
+            .mobile-nav-toggle .hamburger::after {
+                content: '';
+                position: absolute;
+                width: 25px;
+                height: 2px;
+                background-color: var(--text-color);
+                transition: all 0.3s;
+            }
+            .mobile-nav-toggle .hamburger::before { top: -8px; }
+            .mobile-nav-toggle .hamburger::after { top: 8px; }
+
+            .mobile-nav-toggle.is-active .hamburger { background-color: transparent; }
+            .mobile-nav-toggle.is-active .hamburger::before { transform: rotate(45deg); top: 0; }
+            .mobile-nav-toggle.is-active .hamburger::after { transform: rotate(-45deg); top: 0; }
+            
+            .hero-title { font-size: 2.8rem; }
+            .hero-subtitle { font-size: 1rem; }
+            .section { padding: 4rem 1rem; }
+            .section-title { font-size: 2.2rem; margin-bottom: 2rem; }
+            .cta-title { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
@@ -349,12 +375,15 @@
 
     <header class="page-header">
         <div class="logo">أحمد النهدي</div>
-        <nav class="nav-links">
+        <nav class="main-nav" id="main-nav">
             <a href="#portfolio">أعمالي</a>
             <a href="#process">منهجية العمل</a>
             <a href="#testimonials">آراء العملاء</a>
             <a href="#contact" id="nav-contact-btn" class="cta-button-nav">تواصل معي</a>
         </nav>
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+            <span class="hamburger"></span>
+        </button>
     </header>
     
     <main>
@@ -517,6 +546,23 @@
             header.classList.toggle('scrolled', window.scrollY > 50);
         });
 
+        // --- MOBILE NAVIGATION ---
+        const nav = document.getElementById('main-nav');
+        const navToggle = document.getElementById('mobile-nav-toggle');
+        if (navToggle) {
+            navToggle.addEventListener('click', () => {
+                nav.classList.toggle('visible');
+                navToggle.classList.toggle('is-active');
+            });
+        }
+        // Close mobile nav when a link is clicked
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('visible');
+                navToggle.classList.remove('is-active');
+            });
+        });
+
         // --- Scroll Animations ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { 
@@ -597,33 +643,31 @@
         // --- Case Study Modal ---
         const caseStudyModal = document.getElementById('case-study-modal');
         const openCaseStudyModal = (projectId) => {
-            // ابحث عن بيانات المشروع في الملف. ملاحظة: تم تعديل هذا الجزء ليتوافق مع هيكلة البيانات الجديدة
-            // حيث أن ملف admin.html لم يعد يضيف "id" للمشاريع الجديدة. سنعتمد على index بدلاً من id للتبسيط.
-            // لكن للحفاظ على التوافق مع الكود الأصلي، سنفترض أن الـ id لا يزال يستخدم.
-            const data = siteData.portfolio.find(p => p.id === projectId || p.title === projectId); // تعديل بسيط للبحث بالعنوان كحل بديل
-            
+            const data = siteData.portfolio.find(p => p.id === projectId || p.title === projectId);
             if (!data || !data.details || !caseStudyModal) {
                  console.error('Project data or details not found for ID:', projectId);
                  return;
             }
 
-            // بناء محتوى النافذة المنبثقة بشكل ديناميكي من مصفوفة المحتوى
             let modalBodyHtml = '';
             if (data.details.content && Array.isArray(data.details.content)) {
                 data.details.content.forEach(block => {
                     if (block.type === 'image' && block.value) {
                         modalBodyHtml += `<img src="${block.value}" alt="${data.details.title}" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">`;
                     } else if (block.type === 'text' && block.value) {
-                        modalBodyHtml += `<div>${block.value}</div>`; // يتم عرض المحتوى النصي كما هو (يدعم HTML)
+                        modalBodyHtml += `<div>${block.value}</div>`;
                     }
                 });
             }
 
+            // التعديل رقم 2: تحديث بنية HTML للنافذة المنبثقة
             caseStudyModal.innerHTML = `
                 <div class="modal-content">
                     <button class="modal-close" id="case-study-close-button">&times;</button>
-                    <h3 class="modal-title" style="font-size: 2rem;">${data.details.title}</h3>
-                    <p style="color: var(--accent-color); margin-bottom: 1.5rem; font-weight: 500;">${data.details.category}</p>
+                    <div class="case-study-header">
+                        <h3 class="modal-title">${data.details.title}</h3>
+                        <p style="color: var(--accent-color); margin-bottom: 0; font-weight: 500;">${data.details.category}</p>
+                    </div>
                     <div class="case-study-body">
                         ${modalBodyHtml}
                     </div>
