@@ -195,21 +195,49 @@
             margin: 0 auto;
         }
 
-        /* --- Process Section --- */
-        .process-section { background-color: #050505; }
-        .process-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem; max-width: 1200px; margin: auto;
+        /* --- About Me Section --- */
+        .about-section {
+             background-color: #050505;
         }
-        .process-step {
-            text-align: right; background-color: var(--card-bg-color);
-            padding: 2rem; border-radius: 16px; border: 1px solid var(--card-border-color);
-            transition: all 0.3s;
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4rem;
+            max-width: 1100px;
+            margin: auto;
+            flex-wrap: wrap;
         }
-        .process-step:hover { transform: translateY(-10px); border-color: var(--accent-color); }
-        .process-step .step-number { font-size: 2rem; font-weight: 700; color: var(--accent-color); margin-bottom: 1rem; }
-        .process-step .step-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .process-step .step-description { color: rgba(255,255,255,0.7); font-weight: 300; }
+        .about-image-wrapper {
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+        }
+        .about-image {
+            width: 100%;
+            border-radius: 50%;
+            border: 5px solid var(--card-border-color);
+            box-shadow: 0 0 40px rgba(0, 255, 58, 0.15);
+        }
+        .about-content {
+            flex: 1.5;
+            min-width: 300px;
+            text-align: right;
+        }
+        .about-content h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+        .about-content .highlight {
+            color: var(--accent-color);
+        }
+        .about-content p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 1rem;
+        }
         
         /* --- Testimonials Section --- */
         .testimonial-slider {
@@ -415,6 +443,8 @@
             .section-title { font-size: 2.2rem; margin-bottom: 2rem; }
             .cta-title { font-size: 1.8rem; }
             .testimonial-text { font-size: 1.1rem; }
+            .about-container { flex-direction: column; text-align: center; }
+            .about-content { text-align: center; }
 
             .partners-container {
                 grid-template-columns: repeat(3, 1fr);
@@ -480,16 +510,25 @@
                 </div>
             </div>
         </section>
-        <section class="section process-section" id="process">
-            <h2 class="section-title animate-on-scroll">منهجية العمل</h2>
-            <div class="process-grid">
-                <div class="process-step animate-on-scroll"><div class="step-number">01</div><h3 class="step-title">الاستكشاف والبحث</h3><p class="step-description">نبدأ بفهم عميق لرؤيتك، جمهورك، وأهدافك، ونحلل السوق والمنافسين.</p></div>
-                <div class="process-step animate-on-scroll"><div class="step-number">02</div><h3 class="step-title">بناء الاستراتيجية والتصور</h3><p class="step-description">نضع استراتيجية إبداعية ونطور تصورات أولية تعكس جوهر علامتك التجارية.</p></div>
-                <div class="process-step animate-on-scroll"><div class="step-number">03</div><h3 class="step-title">التصميم والتنفيذ</h3><p class="step-description">نحول الأفكار إلى تصاميم ملموسة، مع التركيز على الجودة والدقة في كل تفصيل.</p></div>
-                <div class="process-step animate-on-scroll"><div class="step-number">04</div><h3 class="step-title">المراجعة والتسليم</h3><p class="step-description">نعمل معك على مراجعة التصاميم ونسلم لك المشروع كاملاً وجاهزاً للإطلاق.</p></div>
+
+        <section class="section about-section" id="about">
+            <h2 class="section-title animate-on-scroll">نبذة عني</h2>
+            <div class="about-container">
+                <div class="about-image-wrapper animate-on-scroll">
+                    <img src="https://via.placeholder.com/400" alt="أحمد النهدي" class="about-image">
+                </div>
+                <div class="about-content animate-on-scroll">
+                    <h3>مصمم بصري شغوف بتحويل الأفكار إلى <span class="highlight">تجارب لا تُنسى</span></h3>
+                    <p>
+                        أؤمن بأن التصميم الجيد ليس مجرد شكل جميل، بل هو حوار بين العلامة التجارية وجمهورها. بخبرة تمتد لسنوات في مجال تصميم الهويات البصرية وواجهات المستخدم، أساعد الشركات على سرد قصتها بطريقة مؤثرة وواضحة.
+                    </p>
+                    <p>
+                        أركز دائماً على فهم أهداف عملائي العميقة لتقديم حلول تصميمية ليست فقط جذابة بصرياً، بل تخدم أهدافاً استراتيجية وتحقق نتائج ملموسة.
+                    </p>
+                </div>
             </div>
         </section>
-        
+
         <section class="section testimonials-section" id="testimonials">
              <h2 class="section-title animate-on-scroll">ماذا يقول عملائي</h2>
             <div class="testimonial-slider animate-on-scroll" id="testimonial-slider">
