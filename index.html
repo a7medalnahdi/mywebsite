@@ -158,6 +158,43 @@
         .portfolio-card-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
         .portfolio-card-category { font-size: 0.9rem; font-weight: 500; color: var(--accent-color); }
         
+        /* --- Services Section --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .service-card {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--card-border-color);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(0, 255, 58, 0.1);
+        }
+        .service-card-icon {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+        .service-card-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .service-card-description {
+            color: rgba(255,255,255,0.7);
+            font-weight: 300;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
         /* --- Process Section --- */
         .process-section { background-color: #050505; }
         .process-grid {
@@ -255,7 +292,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* -- تم زيادة ارتفاع الحاوية -- */
             height: 100px;
             padding: 1rem;
             background-color: var(--card-bg-color);
@@ -265,7 +301,6 @@
 
         .partner-logo {
             max-width: 100%;
-            /* -- تم زيادة الارتفاع الأقصى لتكبير الشعارات -- */
             max-height: 75px; 
             object-fit: contain;
         }
@@ -276,7 +311,6 @@
             max-width: 1000px; margin: auto; background: linear-gradient(135deg, #0a0a0a, #111111);
             border: 1px solid var(--card-border-color); border-radius: 24px; padding: 4rem 2rem;
             position: relative; overflow: hidden;
-            /* -- تم إضافة توسيط النص هنا -- */
             text-align: center;
         }
         .cta-container::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse at 80% 20%, var(--accent-color-glow), transparent 70%); opacity: 0.5; }
@@ -420,6 +454,32 @@
                 </div>
         </section>
 
+        <section class="section services-section" id="services">
+            <h2 class="section-title animate-on-scroll">خدماتي</h2>
+            <div class="services-grid">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                    </div>
+                    <h3 class="service-card-title">بناء الهويات البصرية</h3>
+                    <p class="service-card-description">أصمم شعارات واستراتيجيات بصرية متكاملة تروي قصة علامتك التجارية وتصنع لها بصمة فريدة في السوق.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    </div>
+                    <h3 class="service-card-title">تصميم واجهات المستخدم</h3>
+                    <p class="service-card-description">أصمم تجارب استخدام ممتعة وسهلة للمواقع والتطبيقات، مع التركيز على تحقيق أهداف المستخدمين وأهدافك التجارية.</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                    </div>
+                    <h3 class="service-card-title">استشارات إبداعية</h3>
+                    <p class="service-card-description">أقدم استشارات متخصصة لمساعدتك على تطوير استراتيجيتك الإبداعية واتخاذ قرارات تصميمية تخدم رؤيتك المستقبلية.</p>
+                </div>
+            </div>
+        </section>
         <section class="section process-section" id="process">
             <h2 class="section-title animate-on-scroll">منهجية العمل</h2>
             <div class="process-grid">
