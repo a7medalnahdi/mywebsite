@@ -3,9 +3,9 @@
     {
       "id": "1",
       "category": "branding",
-      "image": "https://placehold.co/600x400/00ff3a/000000?text=Tech+Brand",
       "title": "هوية شركة تقنية",
       "card_category": "علامة تجارية",
+      "image": "https://placehold.co/600x400/00ff3a/000000?text=Tech+Brand",
       "modal_title": "هوية شركة تقنية",
       "modal_category": "علامة تجارية",
       "modal_image": "https://placehold.co/800x450/00ff3a/000000?text=Tech+Brand+Cover",
@@ -14,9 +14,9 @@
     {
       "id": "2",
       "category": "uiux",
-      "image": "https://placehold.co/600x400/111111/FFFFFF?text=App+UI",
       "title": "تصميم واجهة تطبيق",
       "card_category": "تصميم UI/UX",
+      "image": "https://placehold.co/600x400/111111/FFFFFF?text=App+UI",
       "modal_title": "تصميم واجهة تطبيق",
       "modal_category": "تصميم UI/UX",
       "modal_image": "https://placehold.co/800x450/111111/FFFFFF?text=App+UI+Cover",
@@ -25,9 +25,9 @@
     {
       "id": "3",
       "category": "branding",
-      "image": "https://placehold.co/600x400/FFFFFF/000000?text=Coffee+Shop",
       "title": "هوية مقهى متخصص",
       "card_category": "علامة تجارية",
+      "image": "https://placehold.co/600x400/FFFFFF/000000?text=Coffee+Shop",
       "modal_title": "هوية مقهى متخصص",
       "modal_category": "علامة تجارية",
       "modal_image": "https://placehold.co/800x450/FFFFFF/000000?text=Coffee+Shop+Cover",
@@ -36,36 +36,16 @@
   ],
   "testimonials": [
     {
-      "image": "https://placehold.co/100x100/FFFFFF/000000?text=KA",
-      "text": "كان العمل مع أحمد تجربة رائعة. حول أفكارنا المجردة إلى هوية بصرية فاقت توقعاتنا. الاحترافية والجودة تتحدث عن نفسها.",
-      "author": "خالد الأحمد",
-      "position": "الرئيس التنفيذي"
-    },
-    {
-      "image": "https://placehold.co/100x100/00ff3a/000000?text=SA",
-      "text": "دقة في المواعيد، وإبداع لا حدود له. استطاع أحمد أن يفهم علامتنا التجارية ويقدم تصاميم عصرية ومناسبة تماماً.",
-      "author": "سارة عبدالله",
-      "position": "مديرة تسويق"
-    },
-    {
-      "image": "https://placehold.co/100x100/555555/FFFFFF?text=MA",
-      "text": "أحمد مصمم موهوب جداً، وصبور في التعامل مع التعديلات. النتيجة النهائية كانت أفضل مما تخيلت.",
-      "author": "محمد علي",
-      "position": "مؤسس مشروع"
+      "text": "جااامد",
+      "author": "احمد النهدي",
+      "position": "المدير",
+      "image": ""
     }
   ],
   "partners": [
     {
       "name": "Google",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png"
-    },
-    {
-      "name": "Amazon",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1200px-Amazon_logo.svg.png"
-    },
-    {
-      "name": "Microsoft",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Microsoft_logo_%282012%29.svg/1200px-Microsoft_logo_%282012%29.svg.png"
     }
   ]
 }
