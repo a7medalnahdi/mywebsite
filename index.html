@@ -34,7 +34,7 @@
         .section-title { font-size: 3rem; font-weight: 700; margin-bottom: 4rem; }
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: auto; }
         .portfolio-card { background-color: var(--card-bg-color); border-radius: 16px; overflow: hidden; cursor: pointer; text-align: right; }
-        .portfolio-card img { width: 100%; height: 250px; object-fit: cover; display: block; transition: transform 0.4s; }
+        .portfolio-card img { width: 100%; height: 250px; object-fit: cover; display: block; transition: transform 0.4s; background-color:#222; }
         .portfolio-card:hover img { transform: scale(1.05); }
         .portfolio-card-content { padding: 1.5rem; }
         .portfolio-card-title { font-size: 1.5rem; font-weight: 700; }
@@ -43,7 +43,7 @@
         .testimonial-track { display: flex; transition: transform 0.5s ease-in-out; }
         .testimonial-card { flex: 0 0 100%; background: var(--card-bg-color); padding: 2.5rem; }
         .testimonial-author-wrapper { display: flex; align-items: center; gap: 1rem; justify-content: flex-end; }
-        .testimonial-author-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+        .testimonial-author-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; background-color: #222; }
         .testimonial-author { text-align: right; }
         .testimonial-author span { display: block; font-weight: 300; color: rgba(255,255,255,0.6); }
         .partners-container { max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); align-items: center; gap: 3rem; }
@@ -62,7 +62,7 @@
         .modal-close { position: sticky; top: 0; background: none; border: none; color: #888; cursor: pointer; font-size: 2rem; float: left; }
         .modal-body h2 { font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem; }
         .modal-body p { margin-bottom: 1.5rem; line-height: 1.9; }
-        .modal-body img { width: 100%; height: auto; border-radius: 8px; margin: 1.5rem 0; }
+        .modal-body img { width: 100%; height: auto; border-radius: 8px; margin: 1.5rem 0; background-color: #222; }
     </style>
 </head>
 <body>
@@ -103,6 +103,8 @@
             preloader.classList.add('hidden');
         }
     });
+    
+    const imageHTML = (src, alt) => src ? `<img src="${src}" alt="${alt}">` : '';
 
     function renderAll() {
         renderPortfolio();
@@ -115,7 +117,8 @@
         const container = document.getElementById('portfolio-grid-container');
         container.innerHTML = siteData.portfolio.map(p => `
             <div class="portfolio-card" data-project-id="${p.id}">
-                <img src="${p.image}" alt="${p.title}"><div class="portfolio-card-content"><h3 class="portfolio-card-title">${p.title}</h3></div>
+                ${imageHTML(p.image, p.title)}
+                <div class="portfolio-card-content"><h3 class="portfolio-card-title">${p.title}</h3></div>
             </div>`).join('');
     }
 
@@ -124,12 +127,15 @@
         container.innerHTML = siteData.testimonials.map(t => `
             <div class="testimonial-card">
                 <p>"${t.text}"</p>
-                <div class="testimonial-author-wrapper"><div class="testimonial-author">${t.author}<span>${t.position}</span></div><img src="${t.image}" class="testimonial-author-img" alt="${t.author}"></div>
+                <div class="testimonial-author-wrapper">
+                    <div class="testimonial-author">${t.author}<span>${t.position}</span></div>
+                    ${imageHTML(t.image, t.author).replace('<img', '<img class="testimonial-author-img"')}
+                </div>
             </div>`).join('');
     }
 
     function renderPartners() {
-        document.getElementById('partners-container').innerHTML = siteData.partners.map(p => `<img src="${p.logo}" alt="${p.name}" class="partner-logo">`).join('');
+        document.getElementById('partners-container').innerHTML = siteData.partners.map(p => imageHTML(p.logo, p.name).replace('<img', '<img class="partner-logo"')).join('');
     }
 
     function renderSocialLinks() {
@@ -150,7 +156,7 @@
                 const contentHtml = project.modal_content.map(block => {
                     if (block.type === 'heading') return `<h2>${block.content}</h2>`;
                     if (block.type === 'paragraph') return `<p>${block.content}</p>`;
-                    if (block.type === 'image') return `<img src="${block.content}" alt="Project image">`;
+                    if (block.type === 'image') return imageHTML(block.content, "Project image");
                     return '';
                 }).join('');
 

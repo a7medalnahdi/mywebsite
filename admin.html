@@ -42,8 +42,12 @@
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #aaa; font-size: 0.9rem; }
         .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; border-radius: 8px; color: var(--text-color); font-family: inherit; }
         
-        .image-uploader { border: 2px dashed var(--border-color); border-radius: 8px; padding: 1rem; text-align: center; }
-        .image-uploader img { max-width: 100%; max-height: 200px; display: block; margin: 0.5rem auto; border-radius: 8px; }
+        .image-uploader { border: 2px dashed var(--border-color); border-radius: 8px; padding: 1rem; text-align: center; position: relative; min-height: 150px; display: flex; justify-content: center; align-items: center; }
+        .image-uploader .image-preview { max-width: 100%; max-height: 200px; display: none; margin: 0.5rem auto; border-radius: 8px; }
+        .image-uploader .image-preview[src]:not([src=""]) { display: block; }
+        .image-uploader .placeholder { color: #777; display: none; }
+        .image-uploader .image-preview:not([src]:not([src=""])) + .placeholder { display: block; }
+
         .image-uploader input[type="file"] { display: none; }
         .image-uploader .btn-upload { display: inline-block; padding: 0.6rem 1.2rem; background-color: #555; color: #fff; border-radius: 8px; cursor: pointer; }
         
@@ -113,7 +117,7 @@
                         <div class="form-group"><label>عنوان المشروع</label><input type="text" class="data-field" data-key="title" value="${item.title}"></div>
                         <div class="form-group">
                             <label>الصورة المصغرة للمشروع</label>
-                            <div class="image-uploader" data-key="image"><img src="${item.image}" alt="معاينة"><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div>
+                            <div class="image-uploader" data-key="image"><img class="image-preview" src="${item.image}" alt="معاينة"><span class="placeholder">لم يتم اختيار صورة</span><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div>
                         </div>
                         <div class="form-group"><label>محتوى صفحة المشروع</label><div class="content-blocks">${renderContentBlocks(item.modal_content, index)}</div></div>
                         <div class="btn-add-section">
@@ -136,7 +140,7 @@
                     </div>
                     ${block.type === 'heading' ? `<input type="text" value="${block.content}" placeholder="اكتب العنوان هنا...">` : ''}
                     ${block.type === 'paragraph' ? `<textarea placeholder="اكتب الفقرة هنا...">${block.content}</textarea>` : ''}
-                    ${block.type === 'image' ? `<div class="image-uploader"><img src="${block.content}" alt="معاينة"><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div>` : ''}
+                    ${block.type === 'image' ? `<div class="image-uploader"><img class="image-preview" src="${block.content}" alt="معاينة"><span class="placeholder">لم يتم اختيار صورة</span><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div>` : ''}
                 </div>`).join('');
         }
 
@@ -146,7 +150,7 @@
                 <div class="item-card" data-index="${index}" data-section="testimonials">
                     <div class="item-card-header"><h3>رأي ${index + 1}</h3><button class="btn-delete" onclick="deleteItem('testimonials', ${index})">حذف</button></div>
                     <div class="item-card-body">
-                         <div class="form-group"><label>صورة العميل</label><div class="image-uploader" data-key="image"><img src="${item.image}" alt="معاينة"><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div></div>
+                         <div class="form-group"><label>صورة العميل</label><div class="image-uploader" data-key="image"><img class="image-preview" src="${item.image}" alt="معاينة"><span class="placeholder">لم يتم اختيار صورة</span><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div></div>
                          <div class="form-group"><label>اسم العميل</label><input type="text" class="data-field" data-key="author" value="${item.author}"></div>
                          <div class="form-group"><label>منصب العميل</label><input type="text" class="data-field" data-key="position" value="${item.position}"></div>
                          <div class="form-group"><label>نص الرأي</label><textarea class="data-field" data-key="text">${item.text}</textarea></div>
@@ -161,7 +165,7 @@
                     <div class="item-card-header"><h3>شريك ${index + 1}</h3><button class="btn-delete" onclick="deleteItem('partners', ${index})">حذف</button></div>
                     <div class="item-card-body">
                          <div class="form-group"><label>اسم الشريك</label><input type="text" class="data-field" data-key="name" value="${item.name}"></div>
-                         <div class="form-group"><label>شعار الشريك</label><div class="image-uploader" data-key="logo"><img src="${item.logo}" alt="معاينة"><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div></div>
+                         <div class="form-group"><label>شعار الشريك</label><div class="image-uploader" data-key="logo"><img class="image-preview" src="${item.logo}" alt="معاينة"><span class="placeholder">لم يتم اختيار صورة</span><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div></div>
                     </div>
                 </div>`).join('') + `<button class="btn-add" onclick="addItem('partners')">+ إضافة شريك جديد</button>`;
         }
@@ -192,7 +196,7 @@
                     if (!file) return;
                     const reader = new FileReader();
                     reader.onload = (event) => {
-                        const img = e.target.closest('.image-uploader').querySelector('img');
+                        const img = e.target.closest('.image-uploader').querySelector('.image-preview');
                         img.src = event.target.result;
                     };
                     reader.readAsDataURL(file);
@@ -239,11 +243,20 @@
 
         // --- SAVE FUNCTION ---
         function saveChanges() {
+            const getCleanImgSrc = (imgElement) => {
+                // This is the FIX. If src contains the current page's host, it means it's an empty or invalid relative link.
+                // Return an empty string. Otherwise, return the full src (which will be a valid URL or a Base64 string).
+                if (imgElement && imgElement.src.includes(window.location.host) && !imgElement.src.startsWith('data:')) {
+                    return "";
+                }
+                return imgElement ? imgElement.src : "";
+            };
+
              // Portfolio
             document.querySelectorAll('#portfolio .item-card').forEach((card, index) => {
                 const item = siteData.portfolio[index];
                 item.title = card.querySelector('.data-field[data-key="title"]').value;
-                item.image = card.querySelector('.image-uploader[data-key="image"] img').src;
+                item.image = getCleanImgSrc(card.querySelector('.image-uploader[data-key="image"] .image-preview'));
                 
                 const newModalContent = [];
                 card.querySelectorAll('.content-blocks .block').forEach(block => {
@@ -252,19 +265,27 @@
                     if (type === 'heading' || type === 'paragraph') {
                         content = block.querySelector('input, textarea').value;
                     } else if (type === 'image') {
-                        content = block.querySelector('.image-uploader img').src;
+                        content = getCleanImgSrc(block.querySelector('.image-preview'));
                     }
                     newModalContent.push({ type, content });
                 });
                 item.modal_content = newModalContent;
             });
             // Other sections
-            ['testimonials', 'partners', 'socialLinks'].forEach(section => {
+            ['testimonials', 'partners'].forEach(section => {
                 document.querySelectorAll(`#${section} .item-card`).forEach((card, index) => {
                     const item = siteData[section][index];
                     card.querySelectorAll('.data-field').forEach(field => item[field.dataset.key] = field.value);
-                    card.querySelectorAll('.image-uploader').forEach(uploader => item[uploader.dataset.key] = uploader.querySelector('img').src);
+                    card.querySelectorAll('.image-uploader').forEach(uploader => {
+                        const key = uploader.dataset.key;
+                        item[key] = getCleanImgSrc(uploader.querySelector('.image-preview'));
+                    });
                 });
+            });
+             // Social Links
+            document.querySelectorAll('#social .item-card').forEach((card, index) => {
+                const item = siteData.socialLinks[index];
+                card.querySelectorAll('.data-field').forEach(field => item[field.dataset.key] = field.value);
             });
 
             // Download
