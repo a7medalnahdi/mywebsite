@@ -94,7 +94,6 @@
         }
         .btn-add:hover { background-color: var(--surface-color); border-color: var(--primary-color); }
         
-        /* New Styles for Content Builder */
         hr.section-divider { border: 0; border-top: 1px solid #444; margin: 2rem 0; }
         .card-section-title { margin-bottom: 1rem; color: var(--primary-color); font-weight: 700; font-size: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #444; }
         .content-builder { border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; margin-top: 1rem; }
@@ -104,6 +103,20 @@
         .btn-add-content:hover { background-color: #4a4a4a; }
         .btn-delete-block { position: absolute; top: 0.5rem; left: 0.5rem; background-color: #633; color: #ffdddd; border: 1px solid #844; border-radius: 5px; cursor: pointer; padding: 0.2rem 0.5rem; font-size: 0.8rem;}
         .btn-delete-block:hover { background-color: #ff4d4d; color: #fff; border-color: #ff4d4d;}
+        
+        /* New Style for Hint Text */
+        .form-hint {
+            font-size: 0.85rem;
+            color: #999;
+            background-color: rgba(80, 80, 80, 0.2);
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-top: -0.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        .form-hint strong { color: #bbb; }
+
     </style>
 </head>
 <body>
@@ -146,10 +159,8 @@
 
     async function loadData() {
         try {
-            const response = await fetch('data.json?v=' + Date.now()); // Prevent caching
+            const response = await fetch('data.json?v=' + Date.now());
             siteData = await response.json();
-            // --- Data Structure Migration (forwards compatibility) ---
-            // If a project has old `modal_content` and not new `details`, convert it.
             if (siteData.portfolio && siteData.portfolio.length > 0) {
                 siteData.portfolio.forEach(p => {
                     if (p.modal_content && !p.details) {
@@ -158,10 +169,7 @@
                             category: p.modal_category || p.card_category || '',
                             content: [{ type: 'text', value: p.modal_content }]
                         };
-                        // Delete old keys
-                        delete p.modal_content;
-                        delete p.modal_title;
-                        delete p.modal_category;
+                        delete p.modal_content; delete p.modal_title; delete p.modal_category;
                     }
                 });
             }
@@ -179,7 +187,6 @@
         renderPartners();
     }
     
-    // --- NEW: CONTENT BLOCK RENDERER ---
     function renderContentBlock(block, projectIndex, blockIndex) {
         const blockId = `p${projectIndex}_b${blockIndex}`;
         let content = '';
@@ -188,89 +195,63 @@
                 <div class="form-group">
                     <label>كتلة نصية (HTML مسموح)</label>
                     <textarea class="content-block-value" data-type="text">${block.value}</textarea>
-                </div>
-            `;
+                </div>`;
         } else if (block.type === 'image') {
             content = `
                 <div class="form-group image-group">
-                    <label>صورة</label>
+                    <label>رابط الصورة</label>
                     <div class="image-controls">
-                        <input type="text" class="content-block-value image-url" data-type="image" value="${block.value}">
+                        <input type="text" class="content-block-value image-url" data-type="image" placeholder="https://example.com/image.jpg" value="${block.value}">
                         <input type="file" class="image-upload" accept="image/*" id="cb_img_${blockId}">
-                        <label for="cb_img_${blockId}" class="btn-upload">اختر ملف</label>
+                        <label for="cb_img_${blockId}" class="btn-upload">معاينة ملف</label>
                     </div>
                     <img src="${block.value}" class="image-preview" alt="Preview">
                 </div>
-            `;
+                <p class="form-hint"><strong>الأفضل:</strong> ارفع الصورة لاستضافتك والصق رابطها في الحقل أعلاه. استخدام "معاينة ملف" سيجعل ملف البيانات ضخماً جداً.</p>
+                `;
         }
-
-        return `
-            <div class="content-block" data-block-index="${blockIndex}">
-                <button class="btn-delete-block" onclick="deleteContentBlock(event, ${projectIndex}, ${blockIndex})">حذف الكتلة</button>
-                ${content}
-            </div>
-        `;
+        return `<div class="content-block" data-block-index="${blockIndex}"><button class="btn-delete-block" onclick="deleteContentBlock(event, ${projectIndex}, ${blockIndex})">حذف الكتلة</button>${content}</div>`;
     }
 
-    // --- RENDER FUNCTIONS (Portfolio is updated) ---
     function renderPortfolio() {
         const list = document.getElementById('portfolio-list');
         list.innerHTML = siteData.portfolio.map((item, index) => `
             <div class="item-card" data-index="${index}" data-section="portfolio">
-                <div class="item-card-header">
-                    <h3>${item.title || `مشروع ${index + 1}`}</h3>
-                    <button class="btn-delete" onclick="deleteItem('portfolio', ${index})">حذف</button>
-                </div>
+                <div class="item-card-header"><h3>${item.title || `مشروع ${index + 1}`}</h3><button class="btn-delete" onclick="deleteItem('portfolio', ${index})">حذف</button></div>
                 <div class="item-card-body">
                     <h4 class="card-section-title">بيانات البطاقة (العرض المصغر)</h4>
-                    <div class="form-group">
-                        <label>عنوان البطاقة</label>
-                        <input type="text" class="data-field-main" data-key="title" value="${item.title || ''}">
-                    </div>
+                    <div class="form-group"><label>عنوان البطاقة</label><input type="text" class="data-field-main" data-key="title" value="${item.title || ''}"></div>
                     <div class="form-group image-group">
-                        <label>صورة البطاقة الرئيسية</label>
+                        <label>رابط صورة البطاقة الرئيسية</label>
                         <div class="image-controls">
-                            <input type="text" class="data-field-main image-url" data-key="image" value="${item.image || ''}">
+                            <input type="text" class="data-field-main image-url" data-key="image" placeholder="https://example.com/image.jpg" value="${item.image || ''}">
                             <input type="file" class="image-upload" accept="image/*" id="p_img_${index}">
-                            <label for="p_img_${index}" class="btn-upload">اختر ملف</label>
+                            <label for="p_img_${index}" class="btn-upload">معاينة ملف</label>
                         </div>
                         <img src="${item.image || ''}" class="image-preview" alt="Preview">
                     </div>
-
+                    <p class="form-hint"><strong>الأفضل:</strong> ارفع الصورة لاستضافتك والصق رابطها في الحقل أعلاه. استخدام "معاينة ملف" سيجعل ملف البيانات ضخماً جداً.</p>
                     <hr class="section-divider">
-
                     <h4 class="card-section-title">محتويات النافذة المنبثقة (التفاصيل)</h4>
-                    <div class="form-group">
-                        <label>عنوان النافذة</label>
-                        <input type="text" class="data-field-details" data-key="title" value="${item.details ? item.details.title : ''}">
-                    </div>
-                    <div class="form-group">
-                        <label>صنف المشروع في النافذة</label>
-                        <input type="text" class="data-field-details" data-key="category" value="${item.details ? item.details.category : ''}">
-                    </div>
-
+                    <div class="form-group"><label>عنوان النافذة</label><input type="text" class="data-field-details" data-key="title" value="${item.details ? item.details.title : ''}"></div>
+                    <div class="form-group"><label>صنف المشروع في النافذة</label><input type="text" class="data-field-details" data-key="category" value="${item.details ? item.details.category : ''}"></div>
                     <div class="content-builder" data-project-index="${index}">
                         <label style="font-weight: 500; color: #aaa;">محتوى المشروع (نصوص وصور)</label>
-                        <div class="content-blocks-list">
-                            ${item.details ? item.details.content.map((block, blockIndex) => renderContentBlock(block, index, blockIndex)).join('') : ''}
-                        </div>
-                        <div class="content-builder-actions">
-                            <button class="btn-add-content" onclick="addContentBlock(event, ${index}, 'text')">+ إضافة نص</button>
-                            <button class="btn-add-content" onclick="addContentBlock(event, ${index}, 'image')">+ إضافة صورة</button>
-                        </div>
+                        <div class="content-blocks-list">${item.details ? item.details.content.map((block, blockIndex) => renderContentBlock(block, index, blockIndex)).join('') : ''}</div>
+                        <div class="content-builder-actions"><button class="btn-add-content" onclick="addContentBlock(event, ${index}, 'text')">+ إضافة نص</button><button class="btn-add-content" onclick="addContentBlock(event, ${index}, 'image')">+ إضافة صورة</button></div>
                     </div>
                 </div>
-            </div>
-        `).join('');
+            </div>`).join('');
     }
 
-    function renderTestimonials() {
+    function renderTestimonials() { /* ... unchanged ... */
         const list = document.getElementById('testimonials-list');
         list.innerHTML = siteData.testimonials.map((item, index) => `
             <div class="item-card" data-index="${index}" data-section="testimonials">
                 <div class="item-card-header"><h3>رأي ${index + 1}</h3><button class="btn-delete" onclick="deleteItem('testimonials', ${index})">حذف</button></div>
                 <div class="item-card-body">
-                    <div class="form-group image-group"><label>صورة العميل</label><div class="image-controls"><input type="text" class="data-field image-url" data-key="image" value="${item.image}"><input type="file" class="image-upload" accept="image/*" id="t_img_${index}"><label for="t_img_${index}" class="btn-upload">اختر ملف</label></div><img src="${item.image}" class="image-preview" alt="Preview"></div>
+                    <div class="form-group image-group"><label>رابط صورة العميل</label><div class="image-controls"><input type="text" class="data-field image-url" data-key="image" value="${item.image}"><input type="file" class="image-upload" accept="image/*" id="t_img_${index}"><label for="t_img_${index}" class="btn-upload">معاينة ملف</label></div><img src="${item.image}" class="image-preview" alt="Preview"></div>
+                    <p class="form-hint"><strong>الأفضل:</strong> استخدم رابطاً للصورة بدلاً من رفع ملف.</p>
                     <div class="form-group"><label>نص الرأي</label><textarea class="data-field" data-key="text">${item.text}</textarea></div>
                     <div class="form-group"><label>اسم العميل</label><input type="text" class="data-field" data-key="author" value="${item.author}"></div>
                     <div class="form-group"><label>منصب العميل</label><input type="text" class="data-field" data-key="position" value="${item.position}"></div>
@@ -278,21 +259,20 @@
             </div>
         `).join('');
     }
-
-    function renderPartners() {
+    function renderPartners() { /* ... unchanged ... */
         const list = document.getElementById('partners-list');
         list.innerHTML = siteData.partners.map((item, index) => `
             <div class="item-card" data-index="${index}" data-section="partners">
                 <div class="item-card-header"><h3>شريك ${index + 1}</h3><button class="btn-delete" onclick="deleteItem('partners', ${index})">حذف</button></div>
                 <div class="item-card-body">
-                    <div class="form-group image-group"><label>شعار الشريك</label><div class="image-controls"><input type="text" class="data-field image-url" data-key="logo" value="${item.logo}"><input type="file" class="image-upload" accept="image/*" id="l_img_${index}"><label for="l_img_${index}" class="btn-upload">اختر ملف</label></div><img src="${item.logo}" class="image-preview" alt="Preview"></div>
+                    <div class="form-group image-group"><label>رابط شعار الشريك</label><div class="image-controls"><input type="text" class="data-field image-url" data-key="logo" value="${item.logo}"><input type="file" class="image-upload" accept="image/*" id="l_img_${index}"><label for="l_img_${index}" class="btn-upload">معاينة ملف</label></div><img src="${item.logo}" class="image-preview" alt="Preview"></div>
+                     <p class="form-hint"><strong>الأفضل:</strong> استخدم رابطاً للشعار بدلاً من رفع ملف.</p>
                     <div class="form-group"><label>اسم الشريك (للنص البديل)</label><input type="text" class="data-field" data-key="name" value="${item.name}"></div>
                 </div>
             </div>
         `).join('');
     }
 
-    // --- EVENT LISTENERS ---
     function setupEventListeners() {
         document.body.addEventListener('change', function(event) {
             if (event.target.classList.contains('image-upload')) {
@@ -302,7 +282,7 @@
                 reader.onload = (e) => {
                     const group = event.target.closest('.image-group');
                     group.querySelector('.image-preview').src = e.target.result;
-                    group.querySelector('.image-url').value = 'تم رفع ملف'; // Indicate file upload
+                    group.querySelector('.image-url').value = 'تمت معاينة ملف من جهازك (غير منصوح به للحفظ)';
                 };
                 reader.readAsDataURL(file);
             }
@@ -315,35 +295,19 @@
         });
     }
     
-    // --- ACTIONS (ADD, DELETE, SAVE) ---
     function addPortfolioItem() {
         siteData.portfolio.unshift({
-            title: "مشروع جديد",
-            image: "",
-            details: {
-                title: "عنوان تفصيلي للمشروع",
-                category: "صنف المشروع",
-                content: [
-                    { type: "text", value: "وصف المشروع هنا..." }
-                ]
-            }
+            title: "مشروع جديد", image: "",
+            details: { title: "عنوان تفصيلي للمشروع", category: "صنف المشروع", content: [{ type: "text", value: "وصف المشروع هنا..." }] }
         });
         renderPortfolio();
     }
-    function addTestimonialItem() {
-        siteData.testimonials.unshift({ image: "", text: "نص جديد", author: "اسم جديد", position: "منصب جديد" });
-        renderTestimonials();
-    }
-    function addPartnerItem() {
-        siteData.partners.unshift({ name: "شريك جديد", logo: "" });
-        renderPartners();
-    }
+    function addTestimonialItem() { siteData.testimonials.unshift({ image: "", text: "نص جديد", author: "اسم جديد", position: "منصب جديد" }); renderTestimonials(); }
+    function addPartnerItem() { siteData.partners.unshift({ name: "شريك جديد", logo: "" }); renderPartners(); }
     
-    // --- NEW: CONTENT BLOCK ACTIONS ---
     function addContentBlock(event, projectIndex, type) {
         event.preventDefault();
-        const defaultValue = type === 'text' ? 'اكتب النص هنا...' : '';
-        siteData.portfolio[projectIndex].details.content.push({ type: type, value: defaultValue });
+        siteData.portfolio[projectIndex].details.content.push({ type: type, value: type === 'text' ? 'اكتب النص هنا...' : '' });
         renderPortfolio();
     }
     function deleteContentBlock(event, projectIndex, blockIndex) {
@@ -362,16 +326,35 @@
     }
 
     function saveChanges() {
-        if(!confirm('هل تريد حفظ التغييرات وتنزيل الملف الجديد؟\n\n**تحذير:** تم تحديث بنية ملف المشاريع لدعم الميزات الجديدة. ستحتاج إلى تحديث كود موقعك الرئيسي ليتمكن من قراءة ملف data.json الجديد.')) return;
+        // --- NEW: Check for Base64 images before saving ---
+        let containsBase64 = false;
+        document.querySelectorAll('.image-preview').forEach(img => {
+            if (img.src.startsWith('data:image/')) {
+                containsBase64 = true;
+            }
+        });
+
+        if (containsBase64) {
+            const proceed = confirm(
+                '**تحذير: حجم الملف سيكون كبيراً جداً!**\n\n' +
+                'لقد قمت برفع ملف صورة واحد على الأقل من جهازك مباشرة. هذا يؤدي إلى تضمين الصورة كاملة داخل ملف data.json، مما يجعله ضخماً ويبطئ موقعك.\n\n' +
+                '**الحل الأفضل هو رفع الصور لاستضافة موقعك ثم استخدام روابطها.**\n\n' +
+                'هل تريد المتابعة وحفظ الملف بالحجم الكبير على أي حال؟'
+            );
+            if (!proceed) {
+                return; // Stop the save process
+            }
+        } else {
+             if(!confirm('هل تريد حفظ التغييرات وتنزيل الملف الجديد؟')) return;
+        }
 
         // --- UPDATE siteData OBJECT FROM DOM ---
-        
-        // 1. PORTFOLIO (New structure)
         const newPortfolio = [];
         document.querySelectorAll('.item-card[data-section="portfolio"]').forEach(card => {
+            const imgSrc = card.querySelector('.item-card-body > .image-group .image-preview').src;
             const newProject = {
                 title: card.querySelector('.data-field-main[data-key="title"]').value,
-                image: card.querySelector('.item-card-body > .image-group .image-preview').src,
+                image: imgSrc.startsWith('data:image/') ? card.querySelector('.data-field-main[data-key="image"]').value : imgSrc,
                 details: {
                     title: card.querySelector('.data-field-details[data-key="title"]').value,
                     category: card.querySelector('.data-field-details[data-key="category"]').value,
@@ -383,8 +366,10 @@
                 const blockType = valueElement.dataset.type;
                 let blockValue;
                 if (blockType === 'image') {
-                    blockValue = block.querySelector('.image-preview').src;
-                } else { // 'text'
+                    const blockImgSrc = block.querySelector('.image-preview').src;
+                    // If it's a base64 string, try to fall back to the input value, otherwise save the src
+                    blockValue = blockImgSrc.startsWith('data:image/') ? valueElement.value : blockImgSrc;
+                } else {
                     blockValue = valueElement.value;
                 }
                 newProject.details.content.push({ type: blockType, value: blockValue });
@@ -393,7 +378,6 @@
         });
         siteData.portfolio = newPortfolio;
 
-        // 2. TESTIMONIALS & PARTNERS (Old structure)
         ['testimonials', 'partners'].forEach(section => {
             const newList = [];
             document.querySelectorAll(`.item-card[data-section="${section}"]`).forEach(card => {
@@ -401,7 +385,8 @@
                 card.querySelectorAll('.data-field').forEach(field => {
                     const key = field.dataset.key;
                     if(key === 'image' || key === 'logo'){
-                        newItem[key] = card.querySelector('.image-preview').src;
+                        const itemImgSrc = card.querySelector('.image-preview').src;
+                        newItem[key] = itemImgSrc.startsWith('data:image/') ? field.value : itemImgSrc;
                     } else {
                         newItem[key] = field.value;
                     }
@@ -411,7 +396,6 @@
             siteData[section] = newList;
         });
 
-        // --- GENERATE AND DOWNLOAD JSON ---
         const jsonString = JSON.stringify(siteData, null, 2);
         const blob = new Blob([jsonString], { type: 'application/json;charset=utf-8' });
         const url = URL.createObjectURL(blob);
@@ -423,10 +407,9 @@
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         
-        alert('تم تجهيز ملف data.json الجديد. سيتم تنزيله الآن.\n\n**مهم:** يرجى استبدال الملف القديم على الخادم بالملف الجديد الذي تم تنزيله.');
+        alert('تم تجهيز ملف data.json الجديد. سيتم تنزيله الآن.');
     }
     
-    // --- UI (TABS) ---
     function openTab(evt, tabName) {
         document.querySelectorAll('.tab-content').forEach(tc => tc.style.display = 'none');
         document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
