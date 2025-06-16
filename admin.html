@@ -29,9 +29,10 @@
         .image-uploader .image-preview { max-width: 100%; max-height: 200px; display: none; margin-bottom: 1rem; border-radius: 8px; }
         .image-uploader .image-preview[src]:not([src=""]) { display: block; }
         .image-uploader .placeholder { color: #777; font-size: 0.9rem; }
-        .image-uploader .image-preview[src]:not([src=""]) ~ .placeholder { display: none; }
+        .image-uploader .image-preview[src]:not([src=""]) ~ .placeholder, .image-uploader .image-preview[src]:not([src=""]) ~ .btn-upload { display: none; }
         .image-uploader input[type="file"] { display: none; }
-        .image-uploader .btn-upload { display: inline-block; padding: 0.6rem 1.2rem; background-color: #555; color: #fff; border-radius: 8px; cursor: pointer; }
+        .image-uploader .btn-upload, .image-uploader .btn-change { display: inline-block; padding: 0.6rem 1.2rem; background-color: #555; color: #fff; border-radius: 8px; cursor: pointer; }
+        .image-uploader .image-preview[src]:not([src=""]) { margin-bottom: 1rem; }
         .content-blocks .block { background-color: #2a2a2a; border: 1px solid #444; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; }
         .block-controls { text-align: left; margin-bottom: 0.5rem; }
         .block-controls button { background: none; border: 1px solid #555; color: #999; cursor: pointer; padding: 0.2rem 0.5rem; margin-left: 0.5rem; border-radius: 4px; }
@@ -41,12 +42,7 @@
     </style>
 </head>
 <body>
-    <header class="admin-header">
-        <h1>لوحة التحكم</h1>
-        <div class="header-actions">
-            <button class="btn-save" onclick="saveChanges()">حفظ وتنزيل</button>
-        </div>
-    </header>
+    <header class="admin-header"><h1>لوحة التحكم</h1><div class="header-actions"><button class="btn-save" onclick="saveChanges()">حفظ وتنزيل</button></div></header>
     <main class="container">
         <nav class="tabs"><button class="tab-btn active" onclick="openTab(event, 'portfolio')">المشاريع</button><button class="tab-btn" onclick="openTab(event, 'testimonials')">آراء العملاء</button><button class="tab-btn" onclick="openTab(event, 'partners')">الشركاء</button><button class="tab-btn" onclick="openTab(event, 'social')">روابط التواصل</button></nav>
         <div id="portfolio" class="tab-content active"></div>
@@ -110,48 +106,60 @@
     function renderAllTabs() {
         renderPortfolio(); renderTestimonials(); renderPartners(); renderSocialLinks();
     }
-    const renderContentBlocks = (blocks, pIndex) => blocks?.map((block, bIndex) => `
+    const renderContentBlocks = (blocks, pIndex) => blocks?.map((block, bIndex) => {
+        const id = `p-${pIndex}-block-${bIndex}`;
+        return `
         <div class="block" data-index="${bIndex}" data-type="${block.type}">
             <div class="block-controls"><button onclick="moveBlock(${pIndex}, ${bIndex}, -1)">↑</button><button onclick="moveBlock(${pIndex}, ${bIndex}, 1)">↓</button><button onclick="deleteBlock(${pIndex}, ${bIndex})">X</button></div>
             ${block.type === 'heading' ? `<input type="text" value="${block.content}" placeholder="اكتب العنوان هنا...">` : ''}
             ${block.type === 'paragraph' ? `<textarea placeholder="اكتب الفقرة هنا...">${block.content}</textarea>` : ''}
-            ${block.type === 'image' ? `<div class="image-uploader"><img class="image-preview" src="${block.content}" alt="معاينة"><span class="placeholder">لم يتم اختيار صورة</span><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div>` : ''}
-        </div>`).join('') || '';
+            ${block.type === 'image' ? `<div class="image-uploader"><img class="image-preview" src="${block.content}"><span class="placeholder">لم يتم اختيار صورة</span><input id="${id}" type="file" accept="image/*"><label for="${id}" class="btn-upload">اختر صورة</label></div>` : ''}
+        </div>`;
+    }).join('') || '';
 
     const renderPortfolio = () => {
         const c = document.getElementById('portfolio');
-        c.innerHTML = siteData.portfolio.map((item, i) => `
+        c.innerHTML = siteData.portfolio.map((item, i) => {
+            const id = `p-thumb-${i}`;
+            return `
             <div class="item-card" data-index="${i}" data-section="portfolio">
                 <div class="item-card-header"><input type="text" class="data-field" data-key="title" value="${item.title}" placeholder="عنوان المشروع"><button class="btn-delete" onclick="deleteItem('portfolio', ${i})">حذف</button></div>
                 <div class="item-card-body">
-                    <div class="form-group"><label>الصورة المصغرة</label><div class="image-uploader" data-key="image"><img class="image-preview" src="${item.image}"><span class="placeholder">لم يتم اختيار صورة</span><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div></div>
+                    <div class="form-group"><label>الصورة المصغرة</label><div class="image-uploader" data-key="image"><img class="image-preview" src="${item.image}"><span class="placeholder">لم يتم اختيار صورة</span><input id="${id}" type="file" accept="image/*"><label for="${id}" class="btn-upload">اختر صورة</label></div></div>
                     <div class="form-group"><label>فئة المشروع (للفلترة)</label><input type="text" class="data-field" data-key="category" value="${item.category || ''}" placeholder="مثال: branding أو uiux"></div>
                     <div class="form-group"><label>محتوى المشروع</label><div class="content-blocks">${renderContentBlocks(item.modal_content, i)}</div></div>
                     <div class="btn-add-section"><button onclick="addContentBlock(${i},'heading')">+ عنوان</button><button onclick="addContentBlock(${i},'paragraph')">+ فقرة</button><button onclick="addContentBlock(${i},'image')">+ صورة</button></div>
                 </div>
-            </div>`).join('') + `<button class="btn-add" onclick="addItem('portfolio')">+ مشروع جديد</button>`;
+            </div>`;
+        }).join('') + `<button class="btn-add" onclick="addItem('portfolio')">+ مشروع جديد</button>`;
     };
     const renderTestimonials = () => { 
         const c = document.getElementById('testimonials');
-        c.innerHTML = siteData.testimonials.map((item, i) => `
+        c.innerHTML = siteData.testimonials.map((item, i) => {
+            const id = `t-img-${i}`;
+            return `
         <div class="item-card" data-index="${i}" data-section="testimonials">
             <div class="item-card-header"><input type="text" class="data-field" data-key="author" value="${item.author}"><button class="btn-delete" onclick="deleteItem('testimonials', ${i})">حذف</button></div>
             <div class="item-card-body">
-                 <div class="form-group"><label>صورة العميل</label><div class="image-uploader" data-key="image"><img class="image-preview" src="${item.image}"><span class="placeholder">لم يتم اختيار صورة</span><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div></div>
+                 <div class="form-group"><label>صورة العميل</label><div class="image-uploader" data-key="image"><img class="image-preview" src="${item.image}"><span class="placeholder">لم يتم اختيار صورة</span><input id="${id}" type="file" accept="image/*"><label for="${id}" class="btn-upload">اختر صورة</label></div></div>
                  <div class="form-group"><label>منصب العميل</label><input type="text" class="data-field" data-key="position" value="${item.position}"></div>
                  <div class="form-group"><label>نص الرأي</label><textarea class="data-field" data-key="text">${item.text}</textarea></div>
             </div>
-        </div>`).join('') + `<button class="btn-add" onclick="addItem('testimonials')">+ رأي جديد</button>`;
+        </div>`;
+        }).join('') + `<button class="btn-add" onclick="addItem('testimonials')">+ رأي جديد</button>`;
     };
     const renderPartners = () => {
         const c = document.getElementById('partners');
-        c.innerHTML = siteData.partners.map((item, i) => `
+        c.innerHTML = siteData.partners.map((item, i) => {
+            const id = `pa-logo-${i}`;
+            return `
         <div class="item-card" data-index="${i}" data-section="partners">
             <div class="item-card-header"><input type="text" class="data-field" data-key="name" value="${item.name}"><button class="btn-delete" onclick="deleteItem('partners', ${i})">حذف</button></div>
             <div class="item-card-body">
-                 <div class="form-group"><label>شعار الشريك</label><div class="image-uploader" data-key="logo"><img class="image-preview" src="${item.logo}"><span class="placeholder">لم يتم اختيار صورة</span><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div></div>
+                 <div class="form-group"><label>شعار الشريك</label><div class="image-uploader" data-key="logo"><img class="image-preview" src="${item.logo}"><span class="placeholder">لم يتم اختيار صورة</span><input id="${id}" type="file" accept="image/*"><label for="${id}" class="btn-upload">اختر صورة</label></div></div>
             </div>
-        </div>`).join('') + `<button class="btn-add" onclick="addItem('partners')">+ شريك جديد</button>`;
+        </div>`;
+        }).join('') + `<button class="btn-add" onclick="addItem('partners')">+ شريك جديد</button>`;
     };
     const renderSocialLinks = () => {
         const c = document.getElementById('social');

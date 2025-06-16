@@ -3,9 +3,8 @@
     {
       "id": "1",
       "title": "هوية شركة تقنية",
-      "image": "https://i.ibb.co/bF0gMhD/work-1.jpg",
+      "image": "",
       "category": "branding",
-      "card_category": "علامة تجارية",
       "modal_content": [
         {
           "type": "heading",
@@ -17,7 +16,7 @@
         },
         {
           "type": "image",
-          "content": "https://i.ibb.co/VvZScfD/work-2.jpg"
+          "content": ""
         },
         {
           "type": "paragraph",
@@ -28,7 +27,7 @@
   ],
   "testimonials": [
     {
-      "image": "https://i.ibb.co/P94jm8K/1.png",
+      "image": "",
       "text": "كان العمل مع أحمد تجربة رائعة. حول أفكارنا المجردة إلى هوية بصرية فاقت توقعاتنا. الاحترافية والجودة تتحدث عن نفسها.",
       "author": "خالد الأحمد",
       "position": "الرئيس التنفيذي"
