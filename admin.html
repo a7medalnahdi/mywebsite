@@ -4,376 +4,224 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --bg-color: #111111; 
-            --surface-color: #1c1c1c;
-            --primary-color: #00ff3a; 
-            --text-color: #EAEAEA; 
-            --border-color: #333;
-        }
+        :root { --bg-color: #111; --surface-color: #1c1c1c; --primary-color: #00ff3a; --text-color: #EAEAEA; --border-color: #333; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: 'IBM Plex Sans Arabic', sans-serif; 
-            background-color: var(--bg-color); 
-            color: var(--text-color); 
-            line-height: 1.8;
-        }
-        .admin-header {
-            background-color: var(--surface-color);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .admin-header h1 {
-            font-size: 1.5rem;
-            color: var(--text-color);
-        }
-        .header-actions button, .header-actions a {
-            padding: 0.7rem 1.2rem;
-            font-weight: 700;
-            border-radius: 8px;
-            cursor: pointer;
-            border: none;
-            font-family: inherit;
-            transition: all 0.2s;
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin-left: 1rem;
-        }
-        .btn-back {
-            background-color: #444;
-            color: #fff;
-        }
-        .btn-back:hover {
-            background-color: #555;
-        }
-        .btn-save {
-            background-color: var(--primary-color);
-            color: #000;
-        }
-        .btn-save:hover {
-            filter: brightness(1.2);
-        }
-
-        .container { max-width: 1300px; margin: auto; padding: 2rem; }
-        
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 2rem;
-        }
-        .tab-btn {
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: #888;
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 500;
-            border-bottom: 3px solid transparent;
-            transition: all 0.2s;
-        }
-        .tab-btn:hover {
-            color: #fff;
-        }
-        .tab-btn.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
-        }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        .item-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .item-card { 
-            background-color: var(--surface-color); 
-            border: 1px solid var(--border-color); 
-            border-radius: 12px; 
-            overflow: hidden;
-        }
-        .item-card-header {
-            padding: 1rem 1.5rem;
-            background-color: rgba(0,0,0,0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .item-card-header h3 {
-             font-size: 1.1rem;
-        }
-        .item-card-body {
-            padding: 1.5rem;
-        }
-        
+        body { font-family: 'IBM Plex Sans Arabic', sans-serif; background-color: var(--bg-color); color: var(--text-color); }
+        .admin-header { background-color: var(--surface-color); padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .admin-header h1 { font-size: 1.25rem; }
+        .header-actions button { padding: 0.6rem 1rem; font-weight: 700; border-radius: 8px; cursor: pointer; border: none; font-family: inherit; font-size: 0.9rem; margin-left: 0.75rem; }
+        .btn-save { background-color: var(--primary-color); color: #000; }
+        .btn-save:disabled { background-color: #555; color: #888; cursor: not-allowed; }
+        .container { width: 95%; max-width: 1200px; margin: 1rem auto; }
+        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 2rem; overflow-x: auto; }
+        .tab-btn { padding: 0.75rem 1.25rem; cursor: pointer; background: none; border: none; color: #888; font-size: 1rem; font-weight: 500; border-bottom: 3px solid transparent; flex-shrink: 0; }
+        .tab-btn.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+        .tab-content { display: none; } .tab-content.active { display: block; }
+        .item-card { background-color: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1.5rem; }
+        .item-card-header { padding: 1rem 1.5rem; background-color: rgba(0,0,0,0.2); display: flex; justify-content: space-between; align-items: center; }
+        .item-card-body { padding: 1.5rem; }
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #aaa; font-size: 0.9rem; }
-        .form-group input, .form-group textarea {
-            width: 100%; padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; border-radius: 8px; color: var(--text-color); font-family: inherit;
-        }
-        .form-group textarea { resize: vertical; min-height: 120px; }
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        .image-group .image-controls {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-        .image-group input[type="file"] { display: none; }
-        .image-group .btn-upload {
-            padding: 0.8rem 1rem;
-            background-color: #555;
-            color: #fff;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            flex-shrink: 0;
-        }
-        .image-group .image-preview {
-            display: block;
-            max-width: 100%;
-            margin-top: 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-        
-        .btn-delete { background-color: #ff4d4d; color: #fff; padding: 0.5rem 1rem; font-size: 0.9rem; border-radius: 8px; border: none; cursor: pointer;}
-        .btn-add {
-            display: block;
-            width: 100%;
-            padding: 1.5rem;
-            font-size: 1.2rem;
-            font-weight: 700;
-            background-color: transparent;
-            color: var(--primary-color);
-            border: 2px dashed var(--border-color);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 1.5rem;
-        }
-        .btn-add:hover {
-            background-color: var(--surface-color);
-            border-color: var(--primary-color);
-        }
-        .hidden { display: none; }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; border-radius: 8px; color: var(--text-color); font-family: inherit; }
+        .image-uploader { border: 2px dashed var(--border-color); border-radius: 8px; padding: 1rem; text-align: center; position: relative; min-height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .image-uploader .image-preview { max-width: 100%; max-height: 200px; display: none; margin-bottom: 1rem; border-radius: 8px; }
+        .image-uploader .image-preview[src]:not([src=""]) { display: block; }
+        .image-uploader .placeholder { color: #777; font-size: 0.9rem; }
+        .image-uploader .image-preview[src]:not([src=""]) ~ .placeholder { display: none; }
+        .image-uploader input[type="file"] { display: none; }
+        .image-uploader .btn-upload { display: inline-block; padding: 0.6rem 1.2rem; background-color: #555; color: #fff; border-radius: 8px; cursor: pointer; }
+        .content-blocks .block { background-color: #2a2a2a; border: 1px solid #444; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; }
+        .block-controls { text-align: left; margin-bottom: 0.5rem; }
+        .block-controls button { background: none; border: 1px solid #555; color: #999; cursor: pointer; padding: 0.2rem 0.5rem; margin-left: 0.5rem; border-radius: 4px; }
+        .btn-delete { background-color: #ff4d4d; color: #fff; border: none; cursor: pointer; }
+        .btn-add-section { display: flex; gap: 1rem; margin-top: 1rem; }
+        .btn-add-section button, .btn-add { width: 100%; padding: 1rem; font-size: 1rem; font-weight: 700; background-color: transparent; color: var(--primary-color); border: 2px dashed var(--border-color); border-radius: 12px; cursor: pointer; }
     </style>
 </head>
 <body>
-
     <header class="admin-header">
         <h1>لوحة التحكم</h1>
         <div class="header-actions">
-            <a href="LAST.html" class="btn-back">العودة للموقع</a>
-            <button class="btn-save" onclick="saveChanges()">حفظ وتنزيل التغييرات</button>
+            <button class="btn-save" onclick="saveChanges()">حفظ وتنزيل</button>
         </div>
     </header>
-
     <main class="container">
-        <nav class="tabs">
-            <button class="tab-btn active" onclick="openTab(event, 'portfolio')">المشاريع</button>
-            <button class="tab-btn" onclick="openTab(event, 'testimonials')">آراء العملاء</button>
-            <button class="tab-btn" onclick="openTab(event, 'partners')">الشركاء</button>
-        </nav>
-
-        <div id="portfolio" class="tab-content active">
-            <div id="portfolio-list" class="item-list"></div>
-            <button class="btn-add" onclick="addPortfolioItem()">+ إضافة مشروع جديد</button>
-        </div>
-
-        <div id="testimonials" class="tab-content">
-            <div id="testimonials-list" class="item-list"></div>
-            <button class="btn-add" onclick="addTestimonialItem()">+ إضافة رأي جديد</button>
-        </div>
-
-        <div id="partners" class="tab-content">
-            <div id="partners-list" class="item-list"></div>
-            <button class="btn-add" onclick="addPartnerItem()">+ إضافة شريك جديد</button>
-        </div>
+        <nav class="tabs"><button class="tab-btn active" onclick="openTab(event, 'portfolio')">المشاريع</button><button class="tab-btn" onclick="openTab(event, 'testimonials')">آراء العملاء</button><button class="tab-btn" onclick="openTab(event, 'partners')">الشركاء</button><button class="tab-btn" onclick="openTab(event, 'social')">روابط التواصل</button></nav>
+        <div id="portfolio" class="tab-content active"></div>
+        <div id="testimonials" class="tab-content"></div>
+        <div id="partners" class="tab-content"></div>
+        <div id="social" class="tab-content"></div>
     </main>
-
     <script>
     let siteData = {};
-
-    document.addEventListener('DOMContentLoaded', loadData);
-
-    async function loadData() {
-        try {
-            const response = await fetch('data.json?v=' + Date.now()); // Prevent caching
-            siteData = await response.json();
-            renderAll();
-            setupEventListeners();
-        } catch (error) {
-            console.error('Error loading data:', error);
-            alert('خطأ في تحميل ملف data.json. تأكد من وجوده في نفس المجلد.');
-        }
-    }
-
-    function renderAll() {
-        renderPortfolio();
-        renderTestimonials();
-        renderPartners();
-    }
-
-    // --- RENDER FUNCTIONS ---
-    function renderPortfolio() {
-        const list = document.getElementById('portfolio-list');
-        list.innerHTML = siteData.portfolio.map((item, index) => `
-            <div class="item-card" data-index="${index}" data-section="portfolio">
-                <div class="item-card-header">
-                    <h3>مشروع ${index + 1}</h3>
-                    <button class="btn-delete" onclick="deleteItem('portfolio', ${index})">حذف</button>
-                </div>
-                <div class="item-card-body">
-                    <div class="form-group"><label>عنوان البطاقة</label><input type="text" class="data-field" data-key="title" value="${item.title}"></div>
-                    <div class="form-group image-group"><label>صورة البطاقة</label><div class="image-controls"><input type="text" class="data-field image-url" data-key="image" value="${item.image}"><input type="file" class="image-upload" accept="image/*" id="p_img_${index}"><label for="p_img_${index}" class="btn-upload">اختر ملف</label></div><img src="${item.image}" class="image-preview" alt="Preview"></div>
-                    <hr style="margin: 2rem 0; border-color: #333;">
-                    <div class="form-group"><label>محتوى النافذة المنبثقة (HTML مسموح)</label><textarea class="data-field" data-key="modal_content">${item.modal_content}</textarea></div>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    function renderTestimonials() {
-        const list = document.getElementById('testimonials-list');
-        list.innerHTML = siteData.testimonials.map((item, index) => `
-            <div class="item-card" data-index="${index}" data-section="testimonials">
-                <div class="item-card-header"><h3>رأي ${index + 1}</h3><button class="btn-delete" onclick="deleteItem('testimonials', ${index})">حذف</button></div>
-                <div class="item-card-body">
-                    <div class="form-group image-group"><label>صورة العميل</label><div class="image-controls"><input type="text" class="data-field image-url" data-key="image" value="${item.image}"><input type="file" class="image-upload" accept="image/*" id="t_img_${index}"><label for="t_img_${index}" class="btn-upload">اختر ملف</label></div><img src="${item.image}" class="image-preview" alt="Preview"></div>
-                    <div class="form-group"><label>نص الرأي</label><textarea class="data-field" data-key="text">${item.text}</textarea></div>
-                    <div class="form-group"><label>اسم العميل</label><input type="text" class="data-field" data-key="author" value="${item.author}"></div>
-                    <div class="form-group"><label>منصب العميل</label><input type="text" class="data-field" data-key="position" value="${item.position}"></div>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    function renderPartners() {
-        const list = document.getElementById('partners-list');
-        list.innerHTML = siteData.partners.map((item, index) => `
-            <div class="item-card" data-index="${index}" data-section="partners">
-                <div class="item-card-header"><h3>شريك ${index + 1}</h3><button class="btn-delete" onclick="deleteItem('partners', ${index})">حذف</button></div>
-                <div class="item-card-body">
-                    <div class="form-group image-group"><label>شعار الشريك</label><div class="image-controls"><input type="text" class="data-field image-url" data-key="logo" value="${item.logo}"><input type="file" class="image-upload" accept="image/*" id="l_img_${index}"><label for="l_img_${index}" class="btn-upload">اختر ملف</label></div><img src="${item.logo}" class="image-preview" alt="Preview"></div>
-                    <div class="form-group"><label>اسم الشريك (للنص البديل)</label><input type="text" class="data-field" data-key="name" value="${item.name}"></div>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    // --- EVENT LISTENERS ---
-    function setupEventListeners() {
-        document.body.addEventListener('change', function(event) {
-            // Handle image uploads
-            if (event.target.classList.contains('image-upload')) {
-                const file = event.target.files[0];
-                if (!file) return;
-                
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const card = event.target.closest('.item-card');
-                    const preview = card.querySelector('.image-preview');
-                    const urlInput = card.querySelector('.image-url');
-                    
-                    preview.src = e.target.result;
-                    urlInput.value = ''; // Clear URL input when a file is uploaded
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-        document.body.addEventListener('input', function(event){
-             // Handle image url changes
-            if (event.target.classList.contains('image-url')) {
-                 const card = event.target.closest('.item-card');
-                 const preview = card.querySelector('.image-preview');
-                 preview.src = event.target.value;
-            }
-        });
-    }
-    
-    // --- ACTIONS (ADD, DELETE, SAVE) ---
-    function addPortfolioItem() {
-        siteData.portfolio.push({
-            id: Date.now().toString(), category: "branding", image: "", title: "مشروع جديد", card_category: "علامة تجارية", modal_title: "مشروع جديد", modal_category: "علامة تجارية", modal_image: "", modal_content: ""
-        });
-        renderPortfolio();
-    }
-    function addTestimonialItem() {
-        siteData.testimonials.push({ image: "", text: "نص جديد", author: "اسم جديد", position: "منصب جديد" });
-        renderTestimonials();
-    }
-    function addPartnerItem() {
-        siteData.partners.push({ name: "شريك جديد", logo: "" });
-        renderPartners();
-    }
-    
-    function deleteItem(section, index) {
-        if(confirm('هل أنت متأكد من حذف هذا العنصر؟')) {
-            siteData[section].splice(index, 1);
-            renderAll();
-        }
-    }
-
-    function saveChanges() {
-        if(!confirm('هل تريد حفظ التغييرات وتنزيل الملف الجديد؟')) return;
-
-        // Collect data from the DOM
-        document.querySelectorAll('.item-card').forEach(card => {
-            const section = card.dataset.section;
-            const index = card.dataset.index;
-            let item = siteData[section][index];
-
-            card.querySelectorAll('.data-field').forEach(field => {
-                const key = field.dataset.key;
-                if(key === 'image' || key === 'logo'){
-                    // For images, save the preview src, which can be a URL or Base64
-                    item[key] = card.querySelector('.image-preview').src;
-                } else {
-                    item[key] = field.value;
+    const optimizeAndEncodeImage = (file, maxWidth = 1200, quality = 0.8) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = e => {
+            const img = new Image();
+            img.src = e.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let { width, height } = img;
+                if (width > maxWidth) {
+                    height *= maxWidth / width;
+                    width = maxWidth;
                 }
-            });
-        });
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                resolve(canvas.toDataURL('image/jpeg', quality));
+            };
+            img.onerror = reject;
+        };
+        reader.onerror = reject;
+    });
 
-        // Generate and download JSON
-        const jsonString = JSON.stringify(siteData, null, 2);
-        const blob = new Blob([jsonString], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'data.json';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        alert('تم تجهيز ملف data.json الجديد. سيتم تنزيله الآن.\n\n**مهم:** يرجى استبدال الملف القديم على الخادم بالملف الجديد الذي تم تنزيله.');
+    const getElementContext = (el) => {
+        const card = el.closest('.item-card');
+        const block = el.closest('.block');
+        return {
+            section: card.dataset.section,
+            itemIndex: parseInt(card.dataset.index, 10),
+            blockIndex: block ? parseInt(block.dataset.index, 10) : null,
+            key: el.dataset.key || (block ? 'content' : null)
+        };
+    };
+
+    const updateState = (context, value) => {
+        const { section, itemIndex, blockIndex, key } = context;
+        if (blockIndex !== null) {
+            siteData[section][itemIndex].modal_content[blockIndex][key] = value;
+        } else {
+            siteData[section][itemIndex][key] = value;
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const response = await fetch('data.json', { cache: 'no-store' });
+            siteData = await response.json();
+            renderAllTabs();
+        } catch (error) { console.error('Error loading data:', error); alert('خطأ في تحميل ملف data.json.'); }
+    });
+
+    function renderAllTabs() {
+        renderPortfolio(); renderTestimonials(); renderPartners(); renderSocialLinks();
     }
+    const renderContentBlocks = (blocks, pIndex) => blocks?.map((block, bIndex) => `
+        <div class="block" data-index="${bIndex}" data-type="${block.type}">
+            <div class="block-controls"><button onclick="moveBlock(${pIndex}, ${bIndex}, -1)">↑</button><button onclick="moveBlock(${pIndex}, ${bIndex}, 1)">↓</button><button onclick="deleteBlock(${pIndex}, ${bIndex})">X</button></div>
+            ${block.type === 'heading' ? `<input type="text" value="${block.content}" placeholder="اكتب العنوان هنا...">` : ''}
+            ${block.type === 'paragraph' ? `<textarea placeholder="اكتب الفقرة هنا...">${block.content}</textarea>` : ''}
+            ${block.type === 'image' ? `<div class="image-uploader"><img class="image-preview" src="${block.content}" alt="معاينة"><span class="placeholder">لم يتم اختيار صورة</span><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div>` : ''}
+        </div>`).join('') || '';
+
+    const renderPortfolio = () => {
+        const c = document.getElementById('portfolio');
+        c.innerHTML = siteData.portfolio.map((item, i) => `
+            <div class="item-card" data-index="${i}" data-section="portfolio">
+                <div class="item-card-header"><h3><input type="text" class="data-field" data-key="title" value="${item.title}" placeholder="عنوان المشروع"></h3><button class="btn-delete" onclick="deleteItem('portfolio', ${i})">حذف</button></div>
+                <div class="item-card-body">
+                    <div class="form-group"><label>الصورة المصغرة</label><div class="image-uploader" data-key="image"><img class="image-preview" src="${item.image}"><span class="placeholder">لم يتم اختيار صورة</span><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div></div>
+                    <div class="form-group"><label>محتوى المشروع</label><div class="content-blocks">${renderContentBlocks(item.modal_content, i)}</div></div>
+                    <div class="btn-add-section"><button onclick="addContentBlock(${i},'heading')">+ عنوان</button><button onclick="addContentBlock(${i},'paragraph')">+ فقرة</button><button onclick="addContentBlock(${i},'image')">+ صورة</button></div>
+                </div>
+            </div>`).join('') + `<button class="btn-add" onclick="addItem('portfolio')">+ مشروع جديد</button>`;
+    };
+    const renderTestimonials = () => { /* Similar structure for other renders */ 
+        const c = document.getElementById('testimonials');
+        c.innerHTML = siteData.testimonials.map((item, i) => `
+        <div class="item-card" data-index="${i}" data-section="testimonials">
+            <div class="item-card-header"><h3><input type="text" class="data-field" data-key="author" value="${item.author}"></h3><button class="btn-delete" onclick="deleteItem('testimonials', ${i})">حذف</button></div>
+            <div class="item-card-body">
+                 <div class="form-group"><label>صورة العميل</label><div class="image-uploader" data-key="image"><img class="image-preview" src="${item.image}"><span class="placeholder">لم يتم اختيار صورة</span><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div></div>
+                 <div class="form-group"><label>منصب العميل</label><input type="text" class="data-field" data-key="position" value="${item.position}"></div>
+                 <div class="form-group"><label>نص الرأي</label><textarea class="data-field" data-key="text">${item.text}</textarea></div>
+            </div>
+        </div>`).join('') + `<button class="btn-add" onclick="addItem('testimonials')">+ رأي جديد</button>`;
+    };
+    const renderPartners = () => {
+        const c = document.getElementById('partners');
+        c.innerHTML = siteData.partners.map((item, i) => `
+        <div class="item-card" data-index="${i}" data-section="partners">
+            <div class="item-card-header"><h3><input type="text" class="data-field" data-key="name" value="${item.name}"></h3><button class="btn-delete" onclick="deleteItem('partners', ${i})">حذف</button></div>
+            <div class="item-card-body">
+                 <div class="form-group"><label>شعار الشريك</label><div class="image-uploader" data-key="logo"><img class="image-preview" src="${item.logo}"><span class="placeholder">لم يتم اختيار صورة</span><input type="file" accept="image/*"><label class="btn-upload">اختر صورة</label></div></div>
+            </div>
+        </div>`).join('') + `<button class="btn-add" onclick="addItem('partners')">+ شريك جديد</button>`;
+    };
+    const renderSocialLinks = () => {
+        const c = document.getElementById('social');
+        c.innerHTML = siteData.socialLinks.map((item, i) => `
+        <div class="item-card" data-index="${i}" data-section="socialLinks">
+            <div class="item-card-header"><h3><input type="text" class="data-field" data-key="name" value="${item.name}"></h3><button class="btn-delete" onclick="deleteItem('socialLinks', ${i})">حذف</button></div>
+            <div class="item-card-body">
+                 <div class="form-group"><label>رابط الحساب</label><input type="url" class="data-field" data-key="url" value="${item.url}"></div>
+                 <div class="form-group"><label>كود SVG للأيقونة</label><textarea class="data-field" data-key="svg" rows="5">${item.svg}</textarea></div>
+            </div>
+        </div>`).join('') + `<button class="btn-add" onclick="addItem('socialLinks')">+ حساب جديد</button>`;
+    };
+
+    document.addEventListener('input', e => {
+        if (e.target.matches('.data-field, .block input, .block textarea')) {
+            updateState(getElementContext(e.target), e.target.value);
+        }
+    });
+
+    document.addEventListener('change', async e => {
+        if (e.target.matches('input[type="file"]')) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const uploader = e.target.closest('.image-uploader');
+            const previewImg = uploader.querySelector('.image-preview');
+            const placeholder = uploader.querySelector('.placeholder');
+            placeholder.textContent = 'جاري الضغط...';
+            try {
+                const optimizedBase64 = await optimizeAndEncodeImage(file);
+                previewImg.src = optimizedBase64;
+                updateState(getElementContext(uploader), optimizedBase64);
+            } catch (err) {
+                placeholder.textContent = 'خطأ في المعالجة';
+                console.error(err);
+            }
+        }
+    });
+
+    const addItem = section => {
+        const defaults = { portfolio: { id: Date.now().toString(), title: "مشروع جديد", image: "", category: "branding", modal_content: [] }, testimonials: { author: "اسم جديد", position: "منصب", text: "", image: "" }, partners: { name: "شريك جديد", logo: "" }, socialLinks: { name: "اسم الحساب", url: "https://", svg: "<svg>...</svg>" } };
+        siteData[section].push(defaults[section]);
+        renderAllTabs();
+    };
+    const deleteItem = (section, index) => { if (confirm('هل أنت متأكد؟')) { siteData[section].splice(index, 1); renderAllTabs(); } };
+    const addContentBlock = (pIndex, type) => { siteData.portfolio[pIndex].modal_content.push({ type: type, content: "" }); renderPortfolio(); };
+    const deleteBlock = (pIndex, bIndex) => { siteData.portfolio[pIndex].modal_content.splice(bIndex, 1); renderPortfolio(); };
+    const moveBlock = (pIndex, bIndex, dir) => { const blocks = siteData.portfolio[pIndex].modal_content; const newIndex = bIndex + dir; if (newIndex >= 0 && newIndex < blocks.length) { [blocks[bIndex], blocks[newIndex]] = [blocks[newIndex], blocks[bIndex]]; renderPortfolio(); } };
     
-    // --- UI (TABS) ---
-    function openTab(evt, tabName) {
-        document.querySelectorAll('.tab-content').forEach(tc => tc.style.display = 'none');
+    const saveChanges = () => {
+        const btn = document.querySelector('.btn-save');
+        btn.disabled = true; btn.textContent = 'جاري الحفظ...';
+        try {
+            const jsonString = JSON.stringify(siteData, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'data.json';
+            a.click();
+            URL.revokeObjectURL(a.href);
+            alert('تم تجهيز ملف data.json الجديد بنجاح!');
+        } catch (error) { alert('حدث خطأ أثناء الحفظ.'); console.error(error); }
+        finally { btn.disabled = false; btn.textContent = 'حفظ وتنزيل'; }
+    };
+    
+    const openTab = (evt, tabName) => {
+        document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
-        document.getElementById(tabName).style.display = 'block';
+        document.getElementById(tabName).classList.add('active');
         evt.currentTarget.classList.add('active');
-    }
+    };
     </script>
 </body>
 </html>
