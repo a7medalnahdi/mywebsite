@@ -181,16 +181,26 @@
         /* --- Partners Section --- */
         .partners-container {
             max-width: 1200px; margin: auto;
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             align-items: center; gap: 3rem;
         }
-        .partner-logo {
-            max-height: 35px;
-            width: auto; margin: 0 auto;
-            opacity: 0.6; filter: brightness(0) invert(1);
-            transition: all 0.3s;
+        /* --- تعديلات قسم الشركاء --- */
+        .partner-logo-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80px; /* زيادة الارتفاع للسماح بشعارات أكبر */
+            padding: 0.5rem;
         }
-        .partner-logo:hover { opacity: 1; transform: scale(1.1); }
+        .partner-logo {
+            max-width: 100%;
+            max-height: 100%;
+            /* إزالة الفلتر لإظهار الألوان الأصلية */
+            transition: transform 0.3s ease;
+        }
+        .partner-logo:hover {
+            transform: scale(1.1);
+        }
         
         /* --- CTA Section --- */
         .cta-section { padding: 0 2rem; }
@@ -301,7 +311,6 @@
             .section-title { font-size: 2.2rem; margin-bottom: 2rem; }
             .cta-title { font-size: 1.8rem; }
 
-            /* تعديل عرض شعارات الشركاء على الجوال */
             .partners-container {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 2rem;
@@ -316,7 +325,7 @@
 
     <header class="page-header">
         <div class="logo">أحمد النهدي</div>
-        </header>
+    </header>
     
     <main>
         <section class="hero-section">
@@ -466,8 +475,11 @@
     function renderPartners() {
         const container = document.getElementById('partners-container');
         if (!container || !siteData.partners) return;
+        // تعديل HTML الخاص بالشعارات
         container.innerHTML = siteData.partners.map(p => `
-            <img src="${p.logo}" alt="${p.name}" class="partner-logo">
+            <div class="partner-logo-wrapper">
+                <img src="${p.logo}" alt="${p.name}" class="partner-logo">
+            </div>
         `).join('');
     }
 
