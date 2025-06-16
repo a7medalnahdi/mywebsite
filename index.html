@@ -73,6 +73,23 @@
             width: 100%; height: 100%;
             background: radial-gradient(ellipse at 50% 150%, rgba(0, 255, 58, 0.15) 0%, transparent 70%);
             z-index: 0;
+            overflow: hidden; /* To contain the pseudo-element */
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40vw;
+            max-width: 500px;
+            height: 100%;
+            background-image: url('Artboard 1.jpg'); /* Lightning bolt image */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            opacity: 0.05; /* Very subtle */
+            z-index: 0;
         }
         
         .hero-content { position: relative; z-index: 2; animation: popIn 1s ease-out 0.5s backwards; }
@@ -89,6 +106,7 @@
             color: rgba(255,255,255,0.8);
             font-weight: 300;
         }
+        /* Hero button style remains for other buttons, but it's removed from hero section */
         .cta-button-hero {
             position: relative; background: var(--accent-color); color: #000;
             border: none; padding: 1rem 3rem; font-size: 1.2rem;
@@ -237,22 +255,27 @@
         .partners-container {
             max-width: 1200px; margin: auto;
             display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            align-items: center; gap: 3rem;
+            align-items: center; gap: 2rem; /* Adjusted gap */
         }
         .partner-logo-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 80px;
-            padding: 0.5rem;
+            height: 90px;
+            padding: 1rem;
+            background-color: var(--card-bg-color);
+            border-radius: 12px;
+            border: 1px solid var(--card-border-color);
+            transition: all 0.3s ease;
+        }
+        .partner-logo-wrapper:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
         }
         .partner-logo {
             max-width: 100%;
             max-height: 100%;
-            transition: transform 0.3s ease;
-        }
-        .partner-logo:hover {
-            transform: scale(1.1);
+            object-fit: contain; /* Ensures logo fits without distortion */
         }
         
         /* --- CTA Section --- */
@@ -367,7 +390,7 @@
 
             .partners-container {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 2rem;
+                gap: 1.5rem;
             }
         }
     </style>
@@ -389,8 +412,7 @@
                     أصمم تجارب بصرية<br>تصنع <span class="highlight">الفارق</span>
                 </h1>
                 <p class="hero-subtitle">مصمم متخصص في بناء هويات بصرية واستراتيجيات إبداعية تساعد العلامات التجارية على النمو والتميز.</p>
-                <a href="#contact" class="cta-button-hero" id="contact-button-hero">لنبدأ مشروعاً</a>
-            </div>
+                </div>
         </section>
 
         <section class="section portfolio-section" id="portfolio">
@@ -677,7 +699,7 @@
 
         // --- Contact Modal ---
         const contactModal = document.getElementById('contact-modal');
-        const openContactButtons = document.querySelectorAll('#contact-button-hero, #modal-open-cta');
+        const openContactButtons = document.querySelectorAll('#modal-open-cta');
         const closeContactButton = document.getElementById('contact-modal-close-button');
         const contactForm = document.getElementById('contact-form');
         const successMessage = document.getElementById('form-success-message');
