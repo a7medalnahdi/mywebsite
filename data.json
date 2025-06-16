@@ -1,22 +1,5 @@
 {
-  "title": "مشروع جديد",
-  "image": "card_image.jpg",
-  "details": {
-    "title": "العنوان التفصيلي للمشروع",
-    "category": "تصميم وتطوير",
-    "content": [
-      {
-        "type": "text",
-        "value": "هذا هو الوصف الأول للمشروع. يمكنك إضافة فقرات متعددة."
-      },
-      {
-        "type": "image",
-        "value": "path/to/project_image1.jpg"
-      },
-      {
-        "type": "text",
-        "value": "هذا وصف إضافي يقع تحت الصورة الأولى."
-      }
-    ]
-  }
+  "portfolio": [],
+  "testimonials": [],
+  "partners": []
 }
