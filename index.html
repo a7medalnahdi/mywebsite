@@ -11,444 +11,96 @@
         :root {
             --bg-color: #000000;
             --text-color: #EAEAEA;
-            --accent-color: #00ff3a; /* أخضر نيوني */
-            --accent-color-dark: #00cc2e;
-            --accent-color-glow: rgba(0, 255, 58, 0.4);
+            --accent-color: #00ff3a;
             --card-bg-color: #111111;
             --card-border-color: rgba(255, 255, 255, 0.1);
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'IBM Plex Sans Arabic', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.8;
-            text-align: center;
-            overflow-x: hidden;
-        }
-        
-        /* --- Preloader --- */
-        .preloader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--bg-color); z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
+        body { font-family: 'IBM Plex Sans Arabic', sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.8; text-align: center; overflow-x: hidden; }
+        .preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease, visibility 0.5s ease; }
         .preloader.hidden { opacity: 0; visibility: hidden; }
-        .loader {
-            width: 50px; height: 50px;
-            border: 5px solid var(--card-border-color);
-            border-top-color: var(--accent-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
+        .loader { width: 50px; height: 50px; border: 5px solid var(--card-border-color); border-top-color: var(--accent-color); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         
-        /* --- Header --- */
-        .page-header {
-            position: fixed; top: 0; left: 0; width: 100%;
-            padding: 1.5rem 2.5rem;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 100;
-            transition: background-color 0.3s;
-        }
-        .page-header.scrolled {
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-        }
+        .page-header { position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; align-items: center; z-index: 100; transition: background-color 0.3s; }
+        .page-header.scrolled { background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); }
         .logo { font-weight: 700; font-size: 1.5rem; }
         .nav-links { display: flex; align-items: center; gap: 2rem; }
-        .nav-links a {
-            color: var(--text-color); text-decoration: none;
-            font-weight: 500; position: relative; transition: color 0.3s;
-        }
-        .nav-links a:not(.cta-button-nav)::after {
-            content: ''; position: absolute;
-            width: 0; height: 2px;
-            bottom: -5px; right: 0;
-            background-color: var(--accent-color);
-            transition: width 0.3s;
-        }
-        .nav-links a:not(.cta-button-nav):hover { color: var(--accent-color); }
-        .nav-links a:not(.cta-button-nav):hover::after { width: 100%; }
-        .cta-button-nav {
-             background-color: var(--accent-color); color: #000;
-            border: 1px solid var(--accent-color); padding: 0.5rem 1.5rem;
-            font-size: 0.9rem; font-weight: 700; border-radius: 50px;
-            cursor: pointer; text-decoration: none;
-            transition: all 0.3s;
-        }
-        .cta-button-nav:hover { background-color: var(--accent-color-dark); transform: translateY(-2px); }
+        .nav-links a { color: var(--text-color); text-decoration: none; font-weight: 500; }
+        .cta-button-nav { background-color: var(--accent-color); color: #000; border: 1px solid var(--accent-color); padding: 0.5rem 1.5rem; font-size: 0.9rem; font-weight: 700; border-radius: 50px; cursor: pointer; text-decoration: none; transition: all 0.3s; }
 
-
-        /* --- Hero Section --- */
-        .hero-section {
-            position: relative; height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            overflow: hidden; padding: 2rem;
-        }
-        .hero-bg {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 100%, rgba(0, 255, 58, 0.1), transparent 70%);
-            z-index: 0;
-        }
-        
-        .hero-content { position: relative; z-index: 2; animation: popIn 1s ease-out 0.5s backwards; }
-        .hero-title {
-            font-size: 5rem; font-weight: 700;
-            max-width: 900px; letter-spacing: -2px;
-            text-shadow: 0 5px 25px rgba(0,0,0,0.5);
-            line-height: 1.2;
-        }
+        .hero-section { position: relative; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
+        .hero-title { font-size: clamp(2.5rem, 10vw, 5rem); font-weight: 700; line-height: 1.2; }
         .hero-title .highlight { color: var(--accent-color); }
-        .hero-subtitle {
-            font-size: 1.2rem; max-width: 600px;
-            margin: 1.5rem auto 2.5rem;
-            color: rgba(255,255,255,0.8);
-            font-weight: 300;
-        }
-        .cta-button-hero {
-            position: relative; background: var(--accent-color); color: #000;
-            border: none; padding: 1rem 3rem; font-size: 1.2rem;
-            font-weight: 700; border-radius: 50px; cursor: pointer;
-            text-decoration: none; transition: all 0.3s; overflow: hidden;
-        }
-        .cta-button-hero:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 10px 30px var(--accent-color-glow); }
+        .hero-subtitle { font-size: 1.2rem; max-width: 600px; margin: 1.5rem auto 2.5rem; color: rgba(255,255,255,0.8); }
+        .cta-button-hero { background: var(--accent-color); color: #000; border: none; padding: 1rem 3rem; font-size: 1.2rem; font-weight: 700; border-radius: 50px; cursor: pointer; text-decoration: none; }
 
-        /* --- Section Shared Styles --- */
-        .section { padding: 6rem 2rem; position: relative; }
+        .section { padding: 6rem 2rem; }
         .section-title { font-size: 3rem; font-weight: 700; margin-bottom: 4rem; }
         
-        /* --- Portfolio Section --- */
-        .portfolio-filters {
-            display: flex; justify-content: center;
-            gap: 1rem; margin-bottom: 3rem;
-        }
-        .filter-btn {
-            background: none; border: 1px solid var(--card-border-color);
-            color: var(--text-color); padding: 0.5rem 1.5rem;
-            border-radius: 50px; cursor: pointer; transition: all 0.3s;
-        }
-        .filter-btn:hover, .filter-btn.active {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color); color: #000;
-        }
-
-        .portfolio-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem; max-width: 1200px; margin: auto;
-        }
-        .portfolio-card {
-            background-color: var(--card-bg-color);
-            border-radius: 16px; overflow: hidden;
-            transition: all 0.4s; cursor: pointer;
-            position: relative;
-        }
-        .portfolio-card.hidden { transform: scale(0.9); opacity: 0; display: none; }
-        .portfolio-card:hover::before { opacity: 1; }
-        .portfolio-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: 16px;
-            background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(0, 255, 58, 0.2), transparent 40%);
-            z-index: 1; opacity: 0; transition: opacity 0.3s;
-        }
-        
-        .portfolio-card .card-image { overflow: hidden; position: relative; z-index: 0; }
-        .portfolio-card img {
-            width: 100%; height: 250px; object-fit: cover;
-            display: block; transition: transform 0.4s;
-        }
-        .portfolio-card:hover img { transform: scale(1.05); }
-        .portfolio-card-content { padding: 1.5rem; text-align: right; position: relative; z-index: 2; }
-        .portfolio-card-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1200px; margin: auto; }
+        .portfolio-card { background-color: var(--card-bg-color); border-radius: 16px; overflow: hidden; cursor: pointer; text-align: right; }
+        .portfolio-card img { width: 100%; height: 250px; object-fit: cover; display: block; background-color:#222; }
+        .portfolio-card-content { padding: 1.5rem; }
+        .portfolio-card-title { font-size: 1.5rem; font-weight: 700; }
         .portfolio-card-category { font-size: 0.9rem; font-weight: 500; color: var(--accent-color); }
-        
-        /* --- Process Section --- */
+
         .process-section { background-color: #050505; }
-        .process-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem; max-width: 1200px; margin: auto;
-        }
-        .process-step {
-            text-align: right;
-            background-color: var(--card-bg-color);
-            padding: 2rem;
-            border-radius: 16px;
-            border: 1px solid var(--card-border-color);
-            transition: all 0.3s;
-        }
-        .process-step:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent-color);
-        }
-        .process-step .step-number {
-            font-size: 2rem; font-weight: 700;
-            color: var(--accent-color); margin-bottom: 1rem;
-        }
+        .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: auto; }
+        .process-step { text-align: right; background-color: var(--card-bg-color); padding: 2rem; border-radius: 16px; }
+        .process-step .step-number { font-size: 2rem; font-weight: 700; color: var(--accent-color); margin-bottom: 1rem; }
         .process-step .step-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .process-step .step-description { color: rgba(255,255,255,0.7); font-weight: 300; }
         
-        /* --- Testimonials Section --- */
-        .testimonials-section { overflow: hidden; }
         .testimonial-slider { max-width: 700px; margin: auto; position: relative; }
         .testimonial-track-container { overflow: hidden; border-radius: 16px; }
         .testimonial-track { display: flex; transition: transform 0.5s ease-in-out; }
-        .testimonial-card {
-            flex: 0 0 100%;
-            background: var(--card-bg-color);
-            padding: 2.5rem;
-        }
-        .testimonial-text { font-size: 1.2rem; font-style: italic; margin-bottom: 1.5rem; color: rgba(255,255,255,0.8); }
+        .testimonial-card { flex: 0 0 100%; background: var(--card-bg-color); padding: 2.5rem; }
         .testimonial-author-wrapper { display: flex; align-items: center; gap: 1rem; justify-content: flex-end; }
-        .testimonial-author-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
-        .testimonial-author { font-weight: 700; text-align: right; }
-        .testimonial-author span { font-weight: 300; color: rgba(255,255,255,0.6); display: block; }
+        .testimonial-author-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; background-color: #222; }
+        .testimonial-author { text-align: right; }
+        .testimonial-author span { display: block; font-weight: 300; color: rgba(255,255,255,0.6); }
         .slider-nav { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; }
-        .slider-btn {
-            background: var(--card-border-color); border: none;
-            width: 40px; height: 40px; border-radius: 50%;
-            color: white; cursor: pointer; transition: all 0.3s;
-        }
-        .slider-btn:hover { background: var(--accent-color); color: #000; }
+        .slider-btn { background: var(--card-border-color); border: none; width: 40px; height: 40px; border-radius: 50%; color: white; cursor: pointer; }
+
+        .partners-container { max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); align-items: center; gap: 3rem; }
+        .partner-logo { max-height: 35px; width: auto; margin: 0 auto; opacity: 0.6; filter: brightness(0) invert(1); }
         
-        /* --- Partners Section --- */
-        .partners-container {
-            max-width: 1200px; margin: auto;
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            align-items: center; gap: 3rem;
-        }
-        .partner-logo {
-            max-height: 35px;
-            width: auto; margin: 0 auto;
-            opacity: 0.6; filter: brightness(0) invert(1);
-            transition: all 0.3s;
-        }
-        .partner-logo:hover { opacity: 1; transform: scale(1.1); }
-        
-        /* --- CTA Section --- */
         .cta-section { padding: 0 2rem; }
-        .cta-container {
-            max-width: 1000px; margin: auto;
-            background: linear-gradient(135deg, #0a0a0a, #111111);
-            border: 1px solid var(--card-border-color);
-            border-radius: 24px; padding: 4rem 2rem;
-            position: relative; overflow: hidden;
-        }
-        .cta-container::before {
-            content: ''; position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(ellipse at 80% 20%, var(--accent-color-glow), transparent 70%);
-            opacity: 0.5;
-        }
-        .cta-title { font-size: 2.5rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem; position: relative; z-index: 1; }
-        .cta-subtitle {
-            font-size: 1.2rem; max-width: 600px; color: rgba(255,255,255,0.8);
-            margin-bottom: 2rem; font-weight: 300; position: relative; z-index: 1;
-        }
-        .cta-button-contact {
-            background: var(--accent-color); color: #000;
-            border: 1px solid transparent; padding: 1rem 3rem;
-            font-size: 1.2rem; font-weight: 700; border-radius: 50px;
-            cursor: pointer; text-decoration: none; transition: all 0.3s;
-            position: relative; z-index: 1;
-        }
-        .cta-button-contact:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--accent-color-glow); }
+        .cta-container { max-width: 1000px; margin: auto; background: var(--card-bg-color); border-radius: 24px; padding: 4rem 2rem; }
+        .cta-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .cta-subtitle { font-size: 1.2rem; max-width: 600px; color: rgba(255,255,255,0.8); margin: auto; margin-bottom: 2rem; }
         
-        /* --- Footer --- */
         .page-footer { padding: 8rem 2rem 2rem; }
         .footer-content { display: flex; flex-direction: column; align-items: center; gap: 2rem; }
         .social-links { display: flex; gap: 1.5rem; }
-        .social-links a { color: rgba(255, 255, 255, 0.6); transition: color 0.3s, transform 0.3s; }
-        .social-links a:hover { color: var(--text-color); transform: translateY(-3px); }
+        .social-links a { color: rgba(255, 255, 255, 0.6); }
         .copyright { font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); }
-        .copyright .admin-trigger { opacity: 0.02; cursor: pointer; transition: opacity 0.3s;}
-        .copyright .admin-trigger:hover { opacity: 0.2; }
-
-        /* --- Modal --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);
-            z-index: 101; display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-        }
-        .modal-overlay.visible { opacity: 1; pointer-events: all; }
-        .modal-content {
-            background: #1a1a1a; padding: 2.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--card-border-color);
-            width: 90%; max-width: 450px; position: relative;
-            transform: scale(0.95); transition: transform 0.3s ease;
-        }
-        .modal-overlay.case-study .modal-content { max-width: 800px; text-align: right; }
-        .modal-overlay.visible .modal-content { transform: scale(1); }
-        .modal-close {
-            position: absolute; top: 1rem; right: 1rem; background: none;
-            border: none; color: #888; cursor: pointer;
-            font-size: 1.5rem; transition: color 0.2s;
-            z-index: 102;
-        }
-        .modal-close:hover { color: var(--text-color); }
-        .modal-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .modal-subtitle { font-size: 1rem; color: #aaa; margin-bottom: 2.5rem; font-weight: 300; }
-        .modal-input, .modal-textarea {
-            width: 100%; padding: 1rem; margin-bottom: 1rem;
-            background: transparent; border: 1px solid #333;
-            border-radius: 12px;
-            color: var(--text-color); font-family: inherit; resize: vertical;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .modal-input:focus, .modal-textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 15px var(--accent-color-glow);
-        }
-        .modal-button {
-            width: 100%; padding: 1rem; background: var(--accent-color);
-            color: #000; border: none; border-radius: 12px;
-            cursor: pointer; font-weight: 700; transition: all 0.3s;
-        }
-        .modal-button:hover {
-            filter: brightness(1.2);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--accent-color-glow);
-        }
-        #form-success-message { display:none; color: var(--accent-color); text-align: center; margin-top: 1rem; font-weight: 500;}
-
-        /* --- Scroll to Top Button --- */
-        .scroll-to-top {
-            position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            background-color: var(--accent-color);
-            color: #000;
-            width: 50px; height: 50px;
-            border-radius: 50%; border: none;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; cursor: pointer;
-            opacity: 0; visibility: hidden;
-            transform: translateY(20px);
-            transition: all 0.3s; z-index: 99;
-        }
-        .scroll-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        .copyright .admin-trigger { opacity: 0.02; cursor: pointer; }
         
-        /* --- Animations --- */
-        .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-        .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); z-index: 101; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .modal-overlay.visible { opacity: 1; pointer-events: all; }
+        .modal-content { background: #1a1a1a; padding: 2rem; border-radius: 16px; width: 90%; max-width: 800px; max-height: 90vh; overflow-y: auto; text-align: right; }
+        .modal-close { position: sticky; top: 0; background: none; border: none; color: #888; cursor: pointer; font-size: 2rem; float: left; }
+        .modal-body h2 { font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem; }
+        .modal-body p { margin-bottom: 1.5rem; line-height: 1.9; }
+        .modal-body img { width: 100%; height: auto; border-radius: 8px; margin: 1.5rem 0; background-color: #222; }
     </style>
 </head>
 <body>
-    <div class="preloader">
-        <div class="loader"></div>
-    </div>
+    <div class="preloader"><div class="loader"></div></div>
 
-    <header class="page-header">
-        <div class="logo">أحمد النهدي</div>
-        <nav class="nav-links">
-            <a href="#portfolio">أعمالي</a>
-            <a href="#process">منهجية العمل</a>
-            <a href="#testimonials">آراء العملاء</a>
-            <a href="#contact" id="nav-contact-btn" class="cta-button-nav">تواصل معي</a>
-        </nav>
-    </header>
-    
+    <header class="page-header"><div class="logo">أحمد النهدي</div><nav class="nav-links"><a href="#portfolio">أعمالي</a><a href="#process">منهجية العمل</a><a href="#testimonials">آراء العملاء</a><a href="#contact" class="cta-button-nav">تواصل معي</a></nav></header>
     <main>
-        <section class="hero-section">
-            <div class="hero-bg"></div>
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    أصمم تجارب بصرية<br>تصنع <span class="highlight">الفارق</span>
-                </h1>
-                <p class="hero-subtitle">مصمم متخصص في بناء هويات بصرية واستراتيجيات إبداعية تساعد العلامات التجارية على النمو والتميز.</p>
-                <a href="#contact" class="cta-button-hero" id="contact-button-hero">لنبدأ مشروعاً</a>
-            </div>
-        </section>
-
-        <section class="section portfolio-section" id="portfolio">
-             <h2 class="section-title animate-on-scroll">أعمالي</h2>
-             <div class="portfolio-filters animate-on-scroll">
-                 <button class="filter-btn active" data-filter="all">الكل</button>
-                 <button class="filter-btn" data-filter="branding">علامات تجارية</button>
-                 <button class="filter-btn" data-filter="uiux">واجهات مستخدم</button>
-             </div>
-            <div class="portfolio-grid animate-on-scroll" id="portfolio-grid-container">
-                </div>
-        </section>
-
-        <section class="section process-section" id="process">
-            <h2 class="section-title animate-on-scroll">منهجية العمل</h2>
-            <div class="process-grid">
-                <div class="process-step animate-on-scroll"><div class="step-number">01</div><h3 class="step-title">الاستكشاف والبحث</h3><p class="step-description">نبدأ بفهم عميق لرؤيتك، جمهورك، وأهدافك، ونحلل السوق والمنافسين.</p></div>
-                <div class="process-step animate-on-scroll"><div class="step-number">02</div><h3 class="step-title">بناء الاستراتيجية والتصور</h3><p class="step-description">نضع استراتيجية إبداعية ونطور تصورات أولية تعكس جوهر علامتك التجارية.</p></div>
-                <div class="process-step animate-on-scroll"><div class="step-number">03</div><h3 class="step-title">التصميم والتنفيذ</h3><p class="step-description">نحول الأفكار إلى تصاميم ملموسة، مع التركيز على الجودة والدقة في كل تفصيل.</p></div>
-                <div class="process-step animate-on-scroll"><div class="step-number">04</div><h3 class="step-title">المراجعة والتسليم</h3><p class="step-description">نعمل معك على مراجعة التصاميم ونسلم لك المشروع كاملاً وجاهزاً للإطلاق.</p></div>
-            </div>
-        </section>
-        
-        <section class="section testimonials-section" id="testimonials">
-             <h2 class="section-title animate-on-scroll">ماذا يقول عملائي</h2>
-            <div class="testimonial-slider animate-on-scroll">
-                <div class="testimonial-track-container">
-                    <div class="testimonial-track" id="testimonial-track-container">
-                        </div>
-                </div>
-            </div>
-            <div class="slider-nav animate-on-scroll">
-                <button class="slider-btn" id="prev-slide">❮</button>
-                <button class="slider-btn" id="next-slide">❯</button>
-            </div>
-        </section>
-
-        <section class="section partners-section">
-            <h2 class="section-title animate-on-scroll">عملت مع</h2>
-            <div class="partners-container animate-on-scroll" id="partners-container">
-                </div>
-        </section>
-
-        <section class="section cta-section" id="contact">
-            <div class="cta-container animate-on-scroll">
-                 <h2 class="cta-title">هل لديك فكرة مشروع؟</h2>
-                 <p class="cta-subtitle">لنجعلها حقيقة. أنا مستعد للاستماع وتحويل رؤيتك إلى واقع ملموس.</p>
-                 <button class="cta-button-contact" id="modal-open-cta">تواصل معي الآن</button>
-            </div>
-        </section>
+        <section class="hero-section"><div class="hero-content"><h1 class="hero-title">أصمم تجارب بصرية<br>تصنع <span class="highlight">الفارق</span></h1><p class="hero-subtitle">مصمم متخصص في بناء هويات بصرية واستراتيجيات إبداعية تساعد العلامات التجارية على النمو والتميز.</p><a href="#contact" class="cta-button-hero">لنبدأ مشروعاً</a></div></section>
+        <section class="section portfolio-section" id="portfolio"><h2 class="section-title">أعمالي</h2><div class="portfolio-grid" id="portfolio-grid-container"></div></section>
+        <section class="section process-section" id="process"><h2 class="section-title">منهجية العمل</h2><div class="process-grid"><div class="process-step"> <div class="step-number">01</div><h3 class="step-title">الاستكشاف والبحث</h3><p>نبدأ بفهم عميق لرؤيتك، جمهورك، وأهدافك، ونحلل السوق والمنافسين.</p></div><div class="process-step"><div class="step-number">02</div><h3 class="step-title">بناء الاستراتيجية والتصور</h3><p>نضع استراتيجية إبداعية ونطور تصورات أولية تعكس جوهر علامتك التجارية.</p></div><div class="process-step"><div class="step-number">03</div><h3 class="step-title">التصميم والتنفيذ</h3><p>نحول الأفكار إلى تصاميم ملموسة، مع التركيز على الجودة والدقة في كل تفصيل.</p></div><div class="process-step"><div class="step-number">04</div><h3 class="step-title">المراجعة والتسليم</h3><p>نعمل معك على مراجعة التصاميم ونسلم لك المشروع كاملاً وجاهزاً للإطلاق.</p></div></div></section>
+        <section class="section testimonials-section" id="testimonials"><h2 class="section-title">ماذا يقول عملائي</h2><div class="testimonial-slider"><div class="testimonial-track-container"><div class="testimonial-track" id="testimonial-track-container"></div></div><div class="slider-nav"><button class="slider-btn" id="prev-slide">❮</button><button class="slider-btn" id="next-slide">❯</button></div></div></section>
+        <section class="section partners-section"><h2 class="section-title">عملت مع</h2><div class="partners-container" id="partners-container"></div></section>
+        <section class="section cta-section" id="contact"><div class="cta-container"><h2 class="cta-title">هل لديك فكرة مشروع؟</h2><p class="cta-subtitle">لنجعلها حقيقة. أنا مستعد للاستماع وتحويل رؤيتك إلى واقع ملموس.</p><a href="mailto:email@example.com" class="cta-button-hero">تواصل معي الآن</a></div></section>
     </main>
-
-    <footer class="page-footer">
-        <div class="footer-content animate-on-scroll">
-            <div class="logo">أحمد النهدي</div>
-            <div class="social-links">
-                <a href="#" target="_blank" aria-label="Behance"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M14.165 11.293c.186-.33.295-.712.295-1.117 0-1.18-.86-2.172-1.922-2.172h-3.41v4.34h3.355c1.078 0 1.98-.98 1.98-2.05zm-.31 1.074h-2.28V9.998h2.24c.48 0 .88.423.88.94 0 .516-.4.93-.84.93zM22 12.01c0-1.093-.883-1.985-1.99-1.985h-2.032v.56c0-.012.02-.23.02-.23.13-1.46-1.02-2.73-2.49-2.73H7.5V1h8.483c1.338 0 2.423 1.062 2.423 2.37 0 .39-.094.75-.26 1.07.38.16.63.53.63.95 0 .59-.47.98-1.03.98h-2.1v.02h2.1c.76 0 1.36.63 1.36 1.38 0 .75-.6 1.37-1.36 1.37h-3.142c-1.63 0-3.022-1.32-3.022-2.95V4.5H4.5v15h9.335c1.55 0 2.95-1.28 2.95-2.85 0-1.06-.59-1.98-1.455-2.45.62-.28 1.04-.9 1.04-1.61zm-7.665 6.27h-2.28v-3.48h2.28c.63 0 1.15.52 1.15 1.15 0 .63-.52 1.15-1.15 1.15z"/></svg></a>
-                <a href="#" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a>
-                <a href="#" target="_blank" aria-label="LinkedIn"><svg xmlns="http://www.w.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-            </div>
-            <p class="copyright">© 2025 كل الحقوق محفوظة. <span class="admin-trigger">admin</span></p>
-        </div>
-    </footer>
-
-    <div class="modal-overlay" id="contact-modal">
-        <div class="modal-content">
-            <button class="modal-close" id="contact-modal-close-button">&times;</button>
-            <h3 class="modal-title">اطلب خدمة</h3>
-            <p class="modal-subtitle">هل لديك فكرة مشروع؟ لنتحدث عنها!</p>
-            <form id="contact-form">
-                <input type="text" class="modal-input" placeholder="اسمك" required>
-                <input type="email" class="modal-input" placeholder="بريدك الإلكتروني" required>
-                <textarea class="modal-input" rows="4" placeholder="صف مشروعك" required></textarea>
-                <button type="submit" class="modal-button">إرسال الطلب</button>
-                <p id="form-success-message" style="display:none; color: var(--accent-color); text-align: center; margin-top: 1rem; font-weight: 500;">شكرًا لك! تم استلام طلبك وسأرد عليك قريبًا.</p>
-            </form>
-        </div>
-    </div>
-    <div class="modal-overlay case-study" id="case-study-modal">
-        </div>
-
-    <button class="scroll-to-top" id="scroll-to-top-btn">↑</button>
+    <footer class="page-footer"><div class="footer-content"><div class="logo">أحمد النهدي</div><div class="social-links" id="social-links-container"></div><p class="copyright">© 2025 كل الحقوق محفوظة. <span class="admin-trigger">admin</span></p></div></footer>
+    <div class="modal-overlay" id="case-study-modal"></div>
 
     <script>
     let siteData = {};
@@ -456,214 +108,129 @@
     document.addEventListener('DOMContentLoaded', async () => {
         const preloader = document.querySelector('.preloader');
         try {
-            const response = await fetch('data.json?v=' + new Date().getTime()); // Prevent caching
+            const response = await fetch('data.json', { cache: 'no-store' });
             if (!response.ok) throw new Error('Network response was not ok');
             siteData = await response.json();
-            
-            renderPortfolio();
-            renderTestimonials();
-            renderPartners();
-            
+            renderAll();
             initializeScripts();
-
         } catch (error) {
             console.error('Failed to load site data:', error);
-            document.body.innerHTML = '<h1 style="color:white; text-align:center; margin-top: 5rem;">Error loading content. Please check data.json file.</h1>';
+            document.body.innerHTML = `<h1 style="color:white; text-align:center; margin-top:5rem;">خطأ في تحميل البيانات. يرجى التأكد من وجود ملف data.json.</h1>`;
         } finally {
             preloader.classList.add('hidden');
         }
     });
+    
+    const imageHTML = (src, alt, className = '') => {
+        if (!src || src.trim() === '') return '';
+        return `<img src="${src}" alt="${alt || ''}" class="${className}">`;
+    };
+
+    function renderAll() {
+        renderPortfolio();
+        renderTestimonials();
+        renderPartners();
+        renderSocialLinks();
+    }
 
     function renderPortfolio() {
         const container = document.getElementById('portfolio-grid-container');
-        if (!container) return;
-        container.innerHTML = siteData.portfolio.map(project => `
-            <div class="portfolio-card" data-category="${project.category}" data-project-id="${project.id}">
-                <div class="card-image"><img src="${project.image}" alt="${project.title}"></div>
+        if (!container || !siteData.portfolio) return;
+        container.innerHTML = siteData.portfolio.map(p => `
+            <div class="portfolio-card" data-project-id="${p.id}">
+                ${imageHTML(p.image, p.title)}
                 <div class="portfolio-card-content">
-                    <h3 class="portfolio-card-title">${project.title}</h3>
-                    <p class="portfolio-card-category">${project.card_category}</p>
+                    <h3 class="portfolio-card-title">${p.title}</h3>
+                    <p class="portfolio-card-category">${p.card_category || p.category}</p>
                 </div>
-            </div>
-        `).join('');
+            </div>`).join('');
     }
 
     function renderTestimonials() {
         const container = document.getElementById('testimonial-track-container');
-        if (!container) return;
+        if (!container || !siteData.testimonials) return;
         container.innerHTML = siteData.testimonials.map(t => `
             <div class="testimonial-card">
-                <p class="testimonial-text">"${t.text}"</p>
+                <p>"${t.text}"</p>
                 <div class="testimonial-author-wrapper">
-                    <img src="${t.image}" class="testimonial-author-img" alt="${t.author}">
                     <div class="testimonial-author">${t.author}<span>${t.position}</span></div>
+                    ${imageHTML(t.image, t.author, 'testimonial-author-img')}
                 </div>
-            </div>
-        `).join('');
+            </div>`).join('');
     }
 
     function renderPartners() {
         const container = document.getElementById('partners-container');
-        if (!container) return;
-        container.innerHTML = siteData.partners.map(p => `
-            <img src="${p.logo}" alt="${p.name}" class="partner-logo">
-        `).join('');
+        if (container && siteData.partners) {
+            container.innerHTML = siteData.partners.map(p => imageHTML(p.logo, p.name, 'partner-logo')).join('');
+        }
+    }
+
+    function renderSocialLinks() {
+        const container = document.getElementById('social-links-container');
+        if (container && siteData.socialLinks) {
+            container.innerHTML = siteData.socialLinks.map(l => `<a href="${l.url}" target="_blank" aria-label="${l.name}">${l.svg}</a>`).join('');
+        }
     }
 
     function initializeScripts() {
-        // --- Header Scroll Effect ---
-        const header = document.querySelector('.page-header');
         window.addEventListener('scroll', () => {
-            header.classList.toggle('scrolled', window.scrollY > 50);
+            const header = document.querySelector('.page-header');
+            if(header) header.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // --- Scroll Animations ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { 
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible'); 
-                }
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-        
-        // --- Portfolio Card Hover Effect ---
-        const cards = document.querySelectorAll('.portfolio-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-            });
-        });
-
-        // --- Portfolio Filter ---
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const portfolioCards = document.querySelectorAll('.portfolio-card');
-        
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                const filter = button.dataset.filter;
-                portfolioCards.forEach(card => {
-                    card.style.display = 'block';
-                    if (filter === 'all' || card.dataset.category === filter) {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.add('hidden');
-                    }
-                });
-            });
-        });
-
-        // --- Testimonial Slider ---
         const track = document.querySelector('.testimonial-track');
-        const nextBtn = document.getElementById('next-slide');
-        const prevBtn = document.getElementById('prev-slide');
-        
-        if (track) {
-            let slides = track.querySelectorAll('.testimonial-card');
-            if (slides.length > 0) {
-                let currentSlide = 0;
-                
-                const moveToSlide = (slideIndex) => {
-                     if (track.parentElement) {
-                        const slideWidth = track.parentElement.offsetWidth;
-                        track.style.transform = 'translateX(-' + slideIndex * slideWidth + 'px)';
-                        currentSlide = slideIndex;
-                    }
-                }
-                const nextSlide = () => {
-                    let nextSlideIndex = currentSlide + 1;
-                    if (nextSlideIndex >= slides.length) nextSlideIndex = 0;
-                    moveToSlide(nextSlideIndex);
-                };
-                const prevSlide = () => {
-                    let prevSlideIndex = currentSlide - 1;
-                    if (prevSlideIndex < 0) prevSlideIndex = slides.length - 1;
-                    moveToSlide(prevSlideIndex);
-                };
-
-                if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-                if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-                
-                let slideInterval = setInterval(nextSlide, 5000);
-            }
+        if (track && track.children.length > 0) {
+            let currentSlide = 0;
+            const slides = track.querySelectorAll('.testimonial-card');
+            const nextBtn = document.getElementById('next-slide');
+            const prevBtn = document.getElementById('prev-slide');
+            const moveToSlide = (slideIndex) => {
+                track.style.transform = 'translateX(-' + slideIndex * 100 + '%)';
+                currentSlide = slideIndex;
+            };
+            const nextSlide = () => moveToSlide((currentSlide + 1) % slides.length);
+            const prevSlide = () => moveToSlide((currentSlide - 1 + slides.length) % slides.length);
+            if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+            if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+            setInterval(nextSlide, 5000);
         }
-        
-        // --- Case Study Modal ---
-        const caseStudyModal = document.getElementById('case-study-modal');
-        const openCaseStudyModal = (projectId) => {
-            const data = siteData.portfolio.find(p => p.id === projectId);
-            if (!data || !caseStudyModal) return;
 
-            caseStudyModal.innerHTML = `
-                <div class="modal-content">
-                    <button class="modal-close" id="case-study-close-button">&times;</button>
-                    <img src="${data.modal_image}" alt="${data.modal_title}" style="width: 100%; border-radius: 8px; margin-bottom: 1.5rem;">
-                    <h3 class="modal-title" style="font-size: 2rem;">${data.modal_title}</h3>
-                    <p style="color: var(--accent-color); margin-bottom: 1.5rem; font-weight: 500;">${data.modal_category}</p>
-                    <div>${data.modal_content}</div>
-                </div>
-            `;
-            caseStudyModal.classList.add('visible');
-            document.getElementById('case-study-close-button').addEventListener('click', closeCaseStudyModal);
-        };
-        const closeCaseStudyModal = () => caseStudyModal.classList.remove('visible');
+        const modal = document.getElementById('case-study-modal');
+        document.querySelectorAll('.portfolio-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const project = siteData.portfolio.find(p => p.id === card.dataset.projectId);
+                if (!project || !project.modal_content) return;
+                
+                const contentHtml = project.modal_content.map(block => {
+                    if (block.type === 'heading') return `<h2>${block.content}</h2>`;
+                    if (block.type === 'paragraph') return `<p>${block.content}</p>`;
+                    if (block.type === 'image') return imageHTML(block.content, "Project image");
+                    return '';
+                }).join('');
 
-        document.querySelectorAll('.portfolio-card').forEach(card => card.addEventListener('click', () => openCaseStudyModal(card.dataset.projectId)));
-        caseStudyModal.addEventListener('click', e => { if (e.target === caseStudyModal) closeCaseStudyModal(); });
-
-        // --- Contact Modal ---
-        const contactModal = document.getElementById('contact-modal');
-        const openContactButtons = document.querySelectorAll('#nav-contact-btn, #contact-button-hero, #modal-open-cta');
-        const closeContactButton = document.getElementById('contact-modal-close-button');
-        const contactForm = document.getElementById('contact-form');
-        const successMessage = document.getElementById('form-success-message');
-
-        const openContactModal = (e) => { e.preventDefault(); contactModal.classList.add('visible'); };
-        const closeContactModal = () => { contactModal.classList.remove('visible'); };
-        openContactButtons.forEach(button => button.addEventListener('click', openContactModal));
-        if (closeContactButton) closeContactButton.addEventListener('click', closeContactModal);
-        if (contactModal) contactModal.addEventListener('click', e => { if (e.target === contactModal) closeContactModal(); });
-        if(contactForm) {
-            contactForm.addEventListener('submit', e => {
-                e.preventDefault();
-                successMessage.style.display = 'block';
-                setTimeout(() => {
-                    closeContactModal();
-                    setTimeout(() => {
-                       successMessage.style.display = 'none';
-                       contactForm.reset();
-                    }, 300);
-                }, 2000);
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <button class="modal-close" onclick="closeModal()">&times;</button>
+                        <div class="modal-body">${contentHtml}</div>
+                    </div>`;
+                modal.classList.add('visible');
             });
-        }
-
-        // --- Scroll to Top Button ---
-        const scrollTopBtn = document.getElementById('scroll-to-top-btn');
-        window.addEventListener('scroll', () => {
-            if(scrollTopBtn) scrollTopBtn.classList.toggle('visible', window.scrollY > 300);
-        });
-        if(scrollTopBtn) scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
         
-        // --- ADMIN LOGIN ---
         const adminTrigger = document.querySelector('.admin-trigger');
-        if(adminTrigger) {
+        if (adminTrigger) {
             adminTrigger.addEventListener('click', () => {
-                const password = prompt('الرجاء إدخال كلمة المرور للوصول إلى لوحة التحكم:');
-                if (password === '123123') {
-                    window.location.href = 'admin.html';
-                } else if (password) {
-                    alert('كلمة مرور خاطئة.');
-                }
+                const pw = prompt('الرجاء إدخال كلمة المرور:');
+                if (pw === '123123') window.location.href = 'admin.html';
+                else if (pw) alert('كلمة مرور خاطئة.');
             });
         }
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('case-study-modal');
+        if(modal) modal.classList.remove('visible');
     }
     </script>
 </body>
