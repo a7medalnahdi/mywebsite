@@ -73,8 +73,9 @@
             width: 100%; height: 100%;
             background: radial-gradient(ellipse at 50% 150%, rgba(0, 255, 58, 0.15) 0%, transparent 70%);
             z-index: 0;
-            overflow: hidden; /* To contain the pseudo-element */
+            overflow: hidden; 
         }
+        /* --- تعديل لمشكلة عدم ظهور صورة البرق --- */
         .hero-bg::after {
             content: '';
             position: absolute;
@@ -83,13 +84,21 @@
             width: 40vw;
             max-width: 500px;
             height: 100%;
-            background-image: url('Artboard 1.jpg'); /* Lightning bolt image */
+            
+            /* تأكد أن اسم الملف هنا مطابق 100% للملف الموجود عندك */
+            background-image: url('Artboard 1.jpg'); 
+            
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             transform: translate(-50%, -50%) rotate(-15deg);
-            opacity: 0.05; /* Very subtle */
+            opacity: 0.05; 
             z-index: 0;
+        
+            /* --- سطر مؤقت للمساعدة على اكتشاف الخطأ --- */
+            /* إذا لم تظهر صورة البرق، قم بإزالة علامتي التعليق "/*" و "*/" من السطر التالي */
+            /* إذا رأيت مربعاً أحمر خافتاً، فالكود يعمل ولكن مسار الصورة أو اسمها خاطئ. */
+            /* background-color: rgba(255, 0, 0, 0.2); */
         }
         
         .hero-content { position: relative; z-index: 2; animation: popIn 1s ease-out 0.5s backwards; }
@@ -106,15 +115,7 @@
             color: rgba(255,255,255,0.8);
             font-weight: 300;
         }
-        /* Hero button style remains for other buttons, but it's removed from hero section */
-        .cta-button-hero {
-            position: relative; background: var(--accent-color); color: #000;
-            border: none; padding: 1rem 3rem; font-size: 1.2rem;
-            font-weight: 700; border-radius: 50px; cursor: pointer;
-            text-decoration: none; transition: all 0.3s; overflow: hidden;
-        }
-        .cta-button-hero:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 10px 30px var(--accent-color-glow); }
-
+       
         /* --- Section Shared Styles --- */
         .section { padding: 6rem 2rem; position: relative; }
         .section-title { font-size: 3rem; font-weight: 700; margin-bottom: 4rem; }
@@ -202,7 +203,7 @@
         }
         .testimonial-quotes-container {
             position: relative;
-            min-height: 150px; /* Set a minimum height to avoid layout shifts */
+            min-height: 150px;
             margin-bottom: 2rem;
             z-index: 1;
         }
@@ -255,8 +256,10 @@
         .partners-container {
             max-width: 1200px; margin: auto;
             display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            align-items: center; gap: 2rem; /* Adjusted gap */
+            align-items: center; gap: 2rem;
         }
+        
+        /* --- تعديل لمشكلة حجم الشعارات --- */
         .partner-logo-wrapper {
             display: flex;
             justify-content: center;
@@ -266,16 +269,17 @@
             background-color: var(--card-bg-color);
             border-radius: 12px;
             border: 1px solid var(--card-border-color);
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease; 
+            transform: scale(1); 
         }
         .partner-logo-wrapper:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1); 
             border-color: var(--accent-color);
         }
         .partner-logo {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain; /* Ensures logo fits without distortion */
+            object-fit: contain;
         }
         
         /* --- CTA Section --- */
@@ -412,7 +416,7 @@
                     أصمم تجارب بصرية<br>تصنع <span class="highlight">الفارق</span>
                 </h1>
                 <p class="hero-subtitle">مصمم متخصص في بناء هويات بصرية واستراتيجيات إبداعية تساعد العلامات التجارية على النمو والتميز.</p>
-                </div>
+            </div>
         </section>
 
         <section class="section portfolio-section" id="portfolio">
