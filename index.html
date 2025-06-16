@@ -164,19 +164,74 @@
         .process-step .step-description { color: rgba(255,255,255,0.7); font-weight: 300; }
         
         /* --- Testimonials Section --- */
-        .testimonials-section { overflow: hidden; }
-        .testimonial-slider { max-width: 700px; margin: auto; position: relative; }
-        .testimonial-track-container { overflow: hidden; border-radius: 16px; }
-        .testimonial-track { display: flex; transition: transform 0.5s ease-in-out; }
-        .testimonial-card { flex: 0 0 100%; background: var(--card-bg-color); padding: 2.5rem; }
-        .testimonial-text { font-size: 1.2rem; font-style: italic; margin-bottom: 1.5rem; color: rgba(255,255,255,0.8); }
-        .testimonial-author-wrapper { display: flex; align-items: center; gap: 1rem; justify-content: flex-end; }
-        .testimonial-author-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
-        .testimonial-author { font-weight: 700; text-align: right; }
-        .testimonial-author span { font-weight: 300; color: rgba(255,255,255,0.6); display: block; }
-        .slider-nav { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; }
-        .slider-btn { background: var(--card-border-color); border: none; width: 40px; height: 40px; border-radius: 50%; color: white; cursor: pointer; transition: all 0.3s; }
-        .slider-btn:hover { background: var(--accent-color); color: #000; }
+        .testimonial-slider {
+            max-width: 800px; margin: auto; position: relative;
+            padding: 2rem;
+            border: 1px solid var(--card-border-color);
+            background-color: var(--card-bg-color);
+            border-radius: 16px;
+        }
+        .testimonial-slider::before {
+            content: '“';
+            font-family: serif;
+            font-size: 10rem;
+            color: rgba(255, 255, 255, 0.05);
+            position: absolute;
+            top: -1rem;
+            right: 1.5rem;
+            z-index: 0;
+            line-height: 1;
+        }
+        .testimonial-quotes-container {
+            position: relative;
+            min-height: 150px; /* Set a minimum height to avoid layout shifts */
+            margin-bottom: 2rem;
+            z-index: 1;
+        }
+        .testimonial-quote {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+            pointer-events: none;
+        }
+        .testimonial-quote.active {
+            position: relative;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .testimonial-text { font-size: 1.3rem; font-weight: 400; margin-bottom: 1rem; color: rgba(255,255,255,0.9); }
+        .testimonial-author { font-weight: 700; font-size: 1.1rem; }
+        .testimonial-author span { font-weight: 400; font-size: 0.9rem; color: rgba(255,255,255,0.6); display: block; margin-top: 0.2rem;}
+
+        .testimonial-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border-color);
+            flex-wrap: wrap;
+        }
+        .testimonial-nav-author {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+            opacity: 0.5;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .testimonial-nav-author.active,
+        .testimonial-nav-author:hover {
+            opacity: 1;
+            border-color: var(--accent-color);
+            transform: scale(1.1);
+        }
         
         /* --- Partners Section --- */
         .partners-container {
@@ -184,18 +239,16 @@
             display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             align-items: center; gap: 3rem;
         }
-        /* --- تعديلات قسم الشركاء --- */
         .partner-logo-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 80px; /* زيادة الارتفاع للسماح بشعارات أكبر */
+            height: 80px;
             padding: 0.5rem;
         }
         .partner-logo {
             max-width: 100%;
             max-height: 100%;
-            /* إزالة الفلتر لإظهار الألوان الأصلية */
             transition: transform 0.3s ease;
         }
         .partner-logo:hover {
@@ -310,6 +363,7 @@
             .section { padding: 4rem 1rem; }
             .section-title { font-size: 2.2rem; margin-bottom: 2rem; }
             .cta-title { font-size: 1.8rem; }
+            .testimonial-text { font-size: 1.1rem; }
 
             .partners-container {
                 grid-template-columns: repeat(3, 1fr);
@@ -362,16 +416,8 @@
         
         <section class="section testimonials-section" id="testimonials">
              <h2 class="section-title animate-on-scroll">ماذا يقول عملائي</h2>
-            <div class="testimonial-slider animate-on-scroll">
-                <div class="testimonial-track-container">
-                    <div class="testimonial-track" id="testimonial-track-container">
-                        </div>
+            <div class="testimonial-slider animate-on-scroll" id="testimonial-slider">
                 </div>
-            </div>
-            <div class="slider-nav animate-on-scroll">
-                <button class="slider-btn" id="prev-slide">❮</button>
-                <button class="slider-btn" id="next-slide">❯</button>
-            </div>
         </section>
 
         <section class="section partners-section">
@@ -459,23 +505,34 @@
     }
 
     function renderTestimonials() {
-        const container = document.getElementById('testimonial-track-container');
-        if (!container || !siteData.testimonials) return;
-        container.innerHTML = siteData.testimonials.map(t => `
-            <div class="testimonial-card">
+        const container = document.getElementById('testimonial-slider');
+        if (!container || !siteData.testimonials || siteData.testimonials.length === 0) return;
+
+        const quotesHtml = siteData.testimonials.map((t, index) => `
+            <div class="testimonial-quote ${index === 0 ? 'active' : ''}" data-index="${index}">
                 <p class="testimonial-text">"${t.text}"</p>
-                <div class="testimonial-author-wrapper">
-                    <img src="${t.image}" class="testimonial-author-img" alt="${t.author}">
-                    <div class="testimonial-author">${t.author}<span>${t.position}</span></div>
-                </div>
+                <div class="testimonial-author">${t.author}<span>${t.position}</span></div>
             </div>
         `).join('');
+
+        const navHtml = siteData.testimonials.map((t, index) => `
+            <img src="${t.image}" alt="${t.author}" class="testimonial-nav-author ${index === 0 ? 'active' : ''}" data-index="${index}">
+        `).join('');
+
+        container.innerHTML = `
+            <div class="testimonial-quotes-container">
+                ${quotesHtml}
+            </div>
+            <div class="testimonial-nav">
+                ${navHtml}
+            </div>
+        `;
     }
+
 
     function renderPartners() {
         const container = document.getElementById('partners-container');
         if (!container || !siteData.partners) return;
-        // تعديل HTML الخاص بالشعارات
         container.innerHTML = siteData.partners.map(p => `
             <div class="partner-logo-wrapper">
                 <img src="${p.logo}" alt="${p.name}" class="partner-logo">
@@ -533,36 +590,44 @@
         });
 
         // --- Testimonial Slider ---
-        const track = document.querySelector('.testimonial-track');
-        const nextBtn = document.getElementById('next-slide');
-        const prevBtn = document.getElementById('prev-slide');
-        
-        if (track && track.children.length > 0) {
-            let slides = track.querySelectorAll('.testimonial-card');
-            let currentSlide = 0;
-            
-            const moveToSlide = (slideIndex) => {
-                 if (track.parentElement) {
-                    const slideWidth = track.parentElement.offsetWidth;
-                    track.style.transform = 'translateX(-' + slideIndex * slideWidth + 'px)';
-                    currentSlide = slideIndex;
-                }
-            }
-            const nextSlide = () => {
-                let nextSlideIndex = currentSlide + 1;
-                if (nextSlideIndex >= slides.length) nextSlideIndex = 0;
-                moveToSlide(nextSlideIndex);
-            };
-            const prevSlide = () => {
-                let prevSlideIndex = currentSlide - 1;
-                if (prevSlideIndex < 0) prevSlideIndex = slides.length - 1;
-                moveToSlide(prevSlideIndex);
+        const slider = document.getElementById('testimonial-slider');
+        if (slider && siteData.testimonials && siteData.testimonials.length > 0) {
+            const quotes = slider.querySelectorAll('.testimonial-quote');
+            const navAuthors = slider.querySelectorAll('.testimonial-nav-author');
+            let currentIndex = 0;
+            let slideInterval;
+
+            const moveToSlide = (index) => {
+                if (index === currentIndex && document.querySelector('.testimonial-quote.active')) return;
+
+                const currentQuote = slider.querySelector('.testimonial-quote.active');
+                const currentNav = slider.querySelector('.testimonial-nav-author.active');
+                
+                if(currentQuote) currentQuote.classList.remove('active');
+                if(currentNav) currentNav.classList.remove('active');
+                
+                quotes[index].classList.add('active');
+                navAuthors[index].classList.add('active');
+                currentIndex = index;
             };
 
-            if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-            if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-            
-            let slideInterval = setInterval(nextSlide, 5000);
+            const nextSlide = () => {
+                const nextIndex = (currentIndex + 1) % quotes.length;
+                moveToSlide(nextIndex);
+            };
+
+            navAuthors.forEach(nav => {
+                nav.addEventListener('click', () => {
+                    const newIndex = parseInt(nav.dataset.index);
+                    moveToSlide(newIndex);
+                    // Reset interval on manual click
+                    clearInterval(slideInterval);
+                    slideInterval = setInterval(nextSlide, 8000);
+                });
+            });
+
+            // Auto-play
+            slideInterval = setInterval(nextSlide, 5000);
         }
         
         // --- Case Study Modal ---
