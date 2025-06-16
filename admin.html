@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color: #000000; --text-color: #EAEAEA; --accent-color: #00ff3a; --card-bg-color: #111111; --card-border-color: rgba(255, 255, 255, 0.1); }
+        body { font-family: 'IBM Plex Sans Arabic', sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.8; padding: 2rem; }
+        .container { max-width: 1200px; margin: auto; }
+        h1, h2 { color: var(--accent-color); border-bottom: 2px solid var(--card-border-color); padding-bottom: 1rem; margin-bottom: 2rem; }
+        .item-card { background-color: var(--card-bg-color); border: 1px solid var(--card-border-color); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 0.8rem; background: #222; border: 1px solid #444; border-radius: 5px; color: var(--text-color); font-family: inherit;
+        }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        button {
+            padding: 0.8rem 1.5rem; font-weight: 700; border-radius: 5px; cursor: pointer; border: none; font-family: inherit; transition: all 0.2s;
+        }
+        .btn-add { background-color: var(--accent-color); color: #000; }
+        .btn-delete { background-color: #ff4d4d; color: #fff; }
+        .btn-save {
+            position: fixed; bottom: 2rem; left: 2rem; background-color: var(--accent-color); color: #000; padding: 1rem 2rem; font-size: 1.2rem; border-radius: 50px; z-index: 100;
+        }
+        .btn-save:hover { transform: scale(1.05); }
+        #output-area { margin-top: 2rem; }
+        #json-output { width: 100%; height: 300px; background: #1a1a1a; color: #fff; border: 1px solid var(--card-border-color); }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>لوحة التحكم</h1>
+        <p>قم بتعديل المحتوى بالأسفل. بعد الانتهاء، اضغط على زر "حفظ وتنزيل التغييرات" لتحديث ملف <code>data.json</code>.</p>
+
+        <section id="admin-portfolio">
+            <h2>المشاريع (أعمالي)</h2>
+            <div id="portfolio-list"></div>
+            <button class="btn-add" onclick="addPortfolioItem()">+ إضافة مشروع جديد</button>
+        </section>
+
+        <section id="admin-testimonials" style="margin-top: 4rem;">
+            <h2>آراء العملاء</h2>
+            <div id="testimonials-list"></div>
+            <button class="btn-add" onclick="addTestimonialItem()">+ إضافة رأي جديد</button>
+        </section>
+
+        <section id="admin-partners" style="margin-top: 4rem;">
+            <h2>الشركاء (عملت مع)</h2>
+            <div id="partners-list"></div>
+            <button class="btn-add" onclick="addPartnerItem()">+ إضافة شريك جديد</button>
+        </section>
+    </div>
+
+    <button class="btn-save" onclick="saveChanges()">حفظ وتنزيل التغييرات</button>
+
+    <script>
+    let siteData = {};
+
+    document.addEventListener('DOMContentLoaded', loadData);
+
+    async function loadData() {
+        try {
+            const response = await fetch('data.json');
+            siteData = await response.json();
+            renderPortfolio();
+            renderTestimonials();
+            renderPartners();
+        } catch (error) {
+            console.error('Error loading data:', error);
+            alert('خطأ في تحميل ملف data.json. تأكد من وجوده في نفس المجلد.');
+        }
+    }
+
+    // Render Portfolio
+    function renderPortfolio() {
+        const list = document.getElementById('portfolio-list');
+        list.innerHTML = siteData.portfolio.map((item, index) => `
+            <div class="item-card" data-index="${index}">
+                <h3>مشروع ${index + 1}</h3>
+                <div class="form-group"><label>عنوان البطاقة</label><input type="text" value="${item.title}" class="title"></div>
+                <div class="form-group"><label>فئة البطاقة (e.g., علامة تجارية)</label><input type="text" value="${item.card_category}" class="card_category"></div>
+                <div class="form-group"><label>رابط صورة البطاقة</label><input type="text" value="${item.image}" class="image"></div>
+                <hr style="margin: 2rem 0; border-color: #333;">
+                <div class="form-group"><label>عنوان النافذة المنبثقة</label><input type="text" value="${item.modal_title}" class="modal_title"></div>
+                <div class="form-group"><label>فئة النافذة المنبثقة</label><input type="text" value="${item.modal_category}" class="modal_category"></div>
+                <div class="form-group"><label>رابط صورة النافذة المنبثقة</label><input type="text" value="${item.modal_image}" class="modal_image"></div>
+                <div class="form-group"><label>محتوى النافذة (HTML مسموح)</label><textarea class="modal_content">${item.modal_content}</textarea></div>
+                <button class="btn-delete" onclick="deleteItem('portfolio', ${index})">حذف المشروع</button>
+            </div>
+        `).join('');
+    }
+
+    // Render Testimonials
+    function renderTestimonials() {
+        const list = document.getElementById('testimonials-list');
+        list.innerHTML = siteData.testimonials.map((item, index) => `
+            <div class="item-card" data-index="${index}">
+                <h3>رأي ${index + 1}</h3>
+                <div class="form-group"><label>نص الرأي</label><textarea class="text">${item.text}</textarea></div>
+                <div class="form-group"><label>اسم العميل</label><input type="text" value="${item.author}" class="author"></div>
+                <div class="form-group"><label>منصب العميل</label><input type="text" value="${item.position}" class="position"></div>
+                <div class="form-group"><label>رابط صورة العميل</label><input type="text" value="${item.image}" class="image"></div>
+                <button class="btn-delete" onclick="deleteItem('testimonials', ${index})">حذف الرأي</button>
+            </div>
+        `).join('');
+    }
+
+    // Render Partners
+    function renderPartners() {
+        const list = document.getElementById('partners-list');
+        list.innerHTML = siteData.partners.map((item, index) => `
+            <div class="item-card" data-index="${index}">
+                 <h3>شريك ${index + 1}</h3>
+                <div class="form-group"><label>اسم الشريك (للنص البديل)</label><input type="text" value="${item.name}" class="name"></div>
+                <div class="form-group"><label>رابط شعار الشريك</label><input type="text" value="${item.logo}" class="logo"></div>
+                <button class="btn-delete" onclick="deleteItem('partners', ${index})">حذف الشريك</button>
+            </div>
+        `).join('');
+    }
+
+    // Add new items
+    function addPortfolioItem() {
+        siteData.portfolio.push({
+            id: Date.now().toString(), category: "branding", image: "", title: "مشروع جديد", card_category: "", modal_title: "", modal_category: "", modal_image: "", modal_content: ""
+        });
+        renderPortfolio();
+    }
+    function addTestimonialItem() {
+        siteData.testimonials.push({ image: "", text: "نص جديد", author: "اسم جديد", position: "منصب جديد" });
+        renderTestimonials();
+    }
+    function addPartnerItem() {
+        siteData.partners.push({ name: "شريك جديد", logo: "" });
+        renderPartners();
+    }
+    
+    // Delete item
+    function deleteItem(section, index) {
+        if(confirm('هل أنت متأكد من حذف هذا العنصر؟')) {
+            siteData[section].splice(index, 1);
+            if(section === 'portfolio') renderPortfolio();
+            else if(section === 'testimonials') renderTestimonials();
+            else if(section === 'partners') renderPartners();
+        }
+    }
+
+    // Save changes
+    function saveChanges() {
+        // Update portfolio
+        const portfolioItems = document.querySelectorAll('#portfolio-list .item-card');
+        const newPortfolio = [];
+        portfolioItems.forEach(card => {
+            newPortfolio.push({
+                id: siteData.portfolio[card.dataset.index].id,
+                category: siteData.portfolio[card.dataset.index].category,
+                title: card.querySelector('.title').value,
+                card_category: card.querySelector('.card_category').value,
+                image: card.querySelector('.image').value,
+                modal_title: card.querySelector('.modal_title').value,
+                modal_category: card.querySelector('.modal_category').value,
+                modal_image: card.querySelector('.modal_image').value,
+                modal_content: card.querySelector('.modal_content').value,
+            });
+        });
+        siteData.portfolio = newPortfolio;
+
+        // Update testimonials
+        const testimonialItems = document.querySelectorAll('#testimonials-list .item-card');
+        const newTestimonials = [];
+        testimonialItems.forEach(card => {
+            newTestimonials.push({
+                text: card.querySelector('.text').value,
+                author: card.querySelector('.author').value,
+                position: card.querySelector('.position').value,
+                image: card.querySelector('.image').value,
+            });
+        });
+        siteData.testimonials = newTestimonials;
+
+        // Update partners
+        const partnerItems = document.querySelectorAll('#partners-list .item-card');
+        const newPartners = [];
+        partnerItems.forEach(card => {
+            newPartners.push({
+                name: card.querySelector('.name').value,
+                logo: card.querySelector('.logo').value,
+            });
+        });
+        siteData.partners = newPartners;
+
+        // Generate and download JSON
+        const jsonString = JSON.stringify(siteData, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'data.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        alert('تم تجهيز ملف data.json الجديد. سيتم تنزيله الآن. يرجى استبدال الملف القديم على الخادم بالملف الجديد.');
+    }
+    </script>
+</body>
+</html>
