@@ -2,83 +2,41 @@
   "portfolio": [
     {
       "id": "1",
-      "category": "branding",
-      "image": "https://placehold.co/600x400/00ff3a/000000?text=Tech+Brand",
       "title": "هوية شركة تقنية",
-      "card_category": "علامة تجارية",
-      "modal_content": {
-        "blocks": [
-          {
-            "type": "header",
-            "data": { "text": "التحدي", "level": 4 }
-          },
-          {
-            "type": "paragraph",
-            "data": { "text": "كانت الشركة تحتاج إلى هوية بصرية حديثة تعكس روح الابتكار والتقدم التكنولوجي، مع الحفاظ على هوية احترافية وجديرة بالثقة." }
-          },
-          {
-            "type": "header",
-            "data": { "text": "الحل", "level": 4 }
-          },
-          {
-            "type": "paragraph",
-            "data": { "text": "قمنا بتصميم شعار ديناميكي ومرن، مع لوحة ألوان مستلهمة من عالم التكنولوجيا، ونظام شبكي صارم يضمن التناسق عبر جميع المنصات الرقمية والمطبوعة." }
-          }
-        ]
-      }
-    },
-    {
-      "id": "2",
-      "category": "uiux",
-      "image": "https://placehold.co/600x400/111111/FFFFFF?text=App+UI",
-      "title": "تصميم واجهة تطبيق",
-      "card_category": "تصميم UI/UX",
-      "modal_content": {
-        "blocks": [
-          {
-            "type": "header",
-            "data": { "text": "التحدي", "level": 4 }
-          },
-          {
-            "type": "paragraph",
-            "data": { "text": "تطوير تجربة مستخدم سلسة وبديهية لتطبيق معقد يحتوي على العديد من الميزات، مع تصميم واجهة جذابة وسهلة الاستخدام." }
-          },
-          {
-            "type": "image",
-            "data": {
-              "file": { "url": "https://placehold.co/800x450/111111/FFFFFF?text=App+UI+Cover" },
-              "caption": "مثال على واجهة التطبيق",
-              "withBorder": false,
-              "stretched": true,
-              "withBackground": false
-            }
-          }
-        ]
-      }
+      "image": "",
+      "category": "branding",
+      "modal_content": [
+        {
+          "type": "heading",
+          "content": "نظرة عامة على المشروع"
+        },
+        {
+          "type": "paragraph",
+          "content": "كانت الشركة تحتاج إلى هوية بصرية حديثة تعكس روح الابتكار والتقدم التكنولوجي، مع الحفاظ على هوية احترافية وجديرة بالثقة. قمنا بتصميم شعار ديناميكي ومرن، مع لوحة ألوان مستلهمة من عالم التكنولوجيا."
+        },
+        {
+          "type": "image",
+          "content": ""
+        },
+        {
+          "type": "paragraph",
+          "content": "تم تطبيق الهوية الجديدة على جميع المنصات الرقمية والمطبوعة لضمان تجربة متناسقة للعلامة التجارية."
+        }
+      ]
     }
   ],
   "testimonials": [
     {
-      "image": "https://placehold.co/100x100/FFFFFF/000000?text=KA",
+      "image": "",
       "text": "كان العمل مع أحمد تجربة رائعة. حول أفكارنا المجردة إلى هوية بصرية فاقت توقعاتنا. الاحترافية والجودة تتحدث عن نفسها.",
       "author": "خالد الأحمد",
       "position": "الرئيس التنفيذي"
-    },
-    {
-      "image": "https://placehold.co/100x100/00ff3a/000000?text=SA",
-      "text": "دقة في المواعيد، وإبداع لا حدود له. استطاع أحمد أن يفهم علامتنا التجارية ويقدم تصاميم عصرية ومناسبة تماماً.",
-      "author": "سارة عبدالله",
-      "position": "مديرة تسويق"
     }
   ],
   "partners": [
     {
       "name": "Google",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png"
-    },
-    {
-      "name": "Amazon",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1200px-Amazon_logo.svg.png"
     }
   ],
   "socialLinks": [
@@ -86,16 +44,6 @@
       "name": "Behance",
       "url": "https://www.behance.net/yourprofile",
       "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M14.165 11.293c.186-.33.295-.712.295-1.117 0-1.18-.86-2.172-1.922-2.172h-3.41v4.34h3.355c1.078 0 1.98-.98 1.98-2.05zm-.31 1.074h-2.28V9.998h2.24c.48 0 .88.423.88.94 0 .516-.4.93-.84.93zM22 12.01c0-1.093-.883-1.985-1.99-1.985h-2.032v.56c0-.012.02-.23.02-.23.13-1.46-1.02-2.73-2.49-2.73H7.5V1h8.483c1.338 0 2.423 1.062 2.423 2.37 0 .39-.094.75-.26 1.07.38.16.63.53.63.95 0 .59-.47.98-1.03.98h-2.1v.02h2.1c.76 0 1.36.63 1.36 1.38 0 .75-.6 1.37-1.36 1.37h-3.142c-1.63 0-3.022-1.32-3.022-2.95V4.5H4.5v15h9.335c1.55 0 2.95-1.28 2.95-2.85 0-1.06-.59-1.98-1.455-2.45.62-.28 1.04-.9 1.04-1.61zm-7.665 6.27h-2.28v-3.48h2.28c.63 0 1.15.52 1.15 1.15 0 .63-.52 1.15-1.15 1.15z\"/></svg>"
-    },
-    {
-      "name": "Instagram",
-      "url": "https://www.instagram.com/yourprofile",
-      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect width=\"20\" height=\"20\" x=\"2\" y=\"2\" rx=\"5\" ry=\"5\"></rect><path d=\"M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z\"></path><line x1=\"17.5\" x2=\"17.51\" y1=\"6.5\" y2=\"6.5\"></line></svg>"
-    },
-    {
-      "name": "LinkedIn",
-      "url": "https://www.linkedin.com/in/yourprofile",
-      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z\"></path><rect width=\"4\" height=\"12\" x=\"2\" y=\"9\"></rect><circle cx=\"4\" cy=\"4\" r=\"2\"></circle></svg>"
     }
   ]
 }
