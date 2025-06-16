@@ -31,7 +31,20 @@
       }
     }
   ],
-  "testimonials": [],
+  "testimonials": [
+    {
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/LEGO_logo.svg/2048px-LEGO_logo.svg.png",
+      "text": "اطلق مصمم في مجرة درب التبانة تعالمنا معاه",
+      "author": "ليقو",
+      "position": "المدير التنفيدي"
+    },
+    {
+      "image": "https://logo.com/image-cdn/images/kts928pd/production/aba5d953cc00ee8187a9f85b6692d9fe51529e71-1024x759.jpg?w=1920&q=72&fm=webp",
+      "text": "مصمم خرافيييييييي",
+      "author": "رونالد ماكدونالد",
+      "position": "المهرج"
+    }
+  ],
   "partners": [
     {
       "logo": "https://blog.khamsat.com/wp-content/uploads/2019/04/%D8%B4%D8%B9%D8%A7%D8%B1-%D9%85%D8%A7%D9%83%D8%AF%D9%88%D9%86%D8%A7%D9%84%D8%AF%D8%B2.png",
