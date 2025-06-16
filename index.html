@@ -75,7 +75,7 @@
             z-index: 0;
             overflow: hidden; 
         }
-        /* --- تعديل لمشكلة عدم ظهور صورة البرق --- */
+        
         .hero-bg::after {
             content: '';
             position: absolute;
@@ -84,21 +84,14 @@
             width: 40vw;
             max-width: 500px;
             height: 100%;
-            
-            /* تأكد أن اسم الملف هنا مطابق 100% للملف الموجود عندك */
-            background-image: url('Artboard 1.png'); 
-            
+            /* -- تم تحديث رابط صورة البرق -- */
+            background-image: url('https://i.ibb.co/L84kPjN/Untitled-1-1.png'); 
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             transform: translate(-50%, -50%) rotate(-15deg);
             opacity: 0.05; 
             z-index: 0;
-        
-            /* --- سطر مؤقت للمساعدة على اكتشاف الخطأ --- */
-            /* إذا لم تظهر صورة البرق، قم بإزالة علامتي التعليق "/*" و "*/" من السطر التالي */
-            /* إذا رأيت مربعاً أحمر خافتاً، فالكود يعمل ولكن مسار الصورة أو اسمها خاطئ. */
-            /* background-color: rgba(255, 0, 0, 0.2); */
         }
         
         .hero-content { position: relative; z-index: 2; animation: popIn 1s ease-out 0.5s backwards; }
@@ -259,7 +252,7 @@
             align-items: center; gap: 2rem;
         }
         
-        /* --- تعديل لمشكلة حجم الشعارات --- */
+        /* -- تعديل الشعارات لتكون ثابتة وأكثر تناسقاً -- */
         .partner-logo-wrapper {
             display: flex;
             justify-content: center;
@@ -269,16 +262,13 @@
             background-color: var(--card-bg-color);
             border-radius: 12px;
             border: 1px solid var(--card-border-color);
-            transition: transform 0.3s ease, border-color 0.3s ease; 
-            transform: scale(1); 
+            /* تم حذف التأثيرات الانتقالية من هنا */
         }
-        .partner-logo-wrapper:hover {
-            transform: translateY(-5px) scale(1); 
-            border-color: var(--accent-color);
-        }
+
         .partner-logo {
             max-width: 100%;
-            max-height: 100%;
+            /* تحديد ارتفاع أقصى للشعار لتوحيد المظهر */
+            max-height: 45px; 
             object-fit: contain;
         }
         
