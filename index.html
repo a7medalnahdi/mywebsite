@@ -84,7 +84,6 @@
             width: 40vw;
             max-width: 500px;
             height: 100%;
-            /* -- تم تحديث مسار صورة البرق -- */
             background-image: url('Artboard 1.png'); 
             background-size: contain;
             background-repeat: no-repeat;
@@ -256,7 +255,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 90px;
+            /* -- تم زيادة ارتفاع الحاوية -- */
+            height: 100px;
             padding: 1rem;
             background-color: var(--card-bg-color);
             border-radius: 12px;
@@ -266,7 +266,7 @@
         .partner-logo {
             max-width: 100%;
             /* -- تم زيادة الارتفاع الأقصى لتكبير الشعارات -- */
-            max-height: 60px; 
+            max-height: 75px; 
             object-fit: contain;
         }
         
@@ -276,10 +276,12 @@
             max-width: 1000px; margin: auto; background: linear-gradient(135deg, #0a0a0a, #111111);
             border: 1px solid var(--card-border-color); border-radius: 24px; padding: 4rem 2rem;
             position: relative; overflow: hidden;
+            /* -- تم إضافة توسيط النص هنا -- */
+            text-align: center;
         }
         .cta-container::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse at 80% 20%, var(--accent-color-glow), transparent 70%); opacity: 0.5; }
         .cta-title { font-size: 2.5rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem; position: relative; z-index: 1; }
-        .cta-subtitle { font-size: 1.2rem; max-width: 600px; color: rgba(255,255,255,0.8); margin-bottom: 2rem; font-weight: 300; position: relative; z-index: 1; }
+        .cta-subtitle { font-size: 1.2rem; max-width: 600px; color: rgba(255,255,255,0.8); margin-bottom: 2rem; font-weight: 300; position: relative; z-index: 1; margin-left: auto; margin-right: auto;}
         .cta-button-contact {
             background: var(--accent-color); color: #000; border: 1px solid transparent; padding: 1rem 3rem;
             font-size: 1.2rem; font-weight: 700; border-radius: 50px; cursor: pointer; text-decoration: none;
